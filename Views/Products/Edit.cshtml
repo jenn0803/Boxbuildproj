@@ -1,0 +1,61 @@
+﻿@* @model BoxBuildproj.Models.Productstbl *@
+
+@* <h2>Edit Product</h2> *@
+@* <form asp-action="Edit"> *@
+@*     <input type="hidden" asp-for="ProductID" /> *@
+@*     <label>Product Name:</label> *@
+@*     <input asp-for="ProductName" required /> *@
+@*     <label>Description:</label> *@
+@*     <input asp-for="Description" /> *@
+@*     <label>Price:</label> *@
+@*     <input asp-for="Price" required /> *@
+@*     <label>Stock Quantity:</label> *@
+@*     <input asp-for="StockQuantity" required /> *@
+@*     <label>Category:</label> *@
+@*     <input asp-for="Category" required /> *@
+@*     <button type="submit">Update</button> *@
+@* </form> *@
+
+@model BoxBuildproj.Models.Productstbl
+
+<h2>Edit Product</h2>
+
+<form asp-action="Edit" method="post" enctype="multipart/form-data">
+    <input type="hidden" asp-for="ProductID" />
+
+    <label>Product Name:</label>
+    <input asp-for="ProductName" class="form-control" required />
+
+    <label>Description:</label>
+    <textarea asp-for="Description" class="form-control"></textarea>
+
+    <label>Price:</label>
+    <input asp-for="Price" class="form-control" required type="number" step="0.01" />
+
+    <label>Stock Quantity:</label>
+    <input asp-for="StockQuantity" class="form-control" required type="number" />
+
+    <label>Category:</label>
+    <input asp-for="Category" class="form-control" required />
+
+    <!-- Display Existing Image -->
+    <div>
+        <label>Current Image:</label>
+        @if (!string.IsNullOrEmpty(Model.ImagePath))
+        {
+            <div>
+                <img src="@Model.ImagePath" alt="Product Image" width="150" height="150" class="mb-2" />
+            </div>
+        }
+        else
+        {
+            <p>No Image Available</p>
+        }
+    </div>
+
+    <!-- Upload New Image -->
+    <label>Upload New Image:</label>
+    <input type="file" name="ProductImage" class="form-control" accept="image/*" />
+
+    <button type="submit" class="btn btn-primary mt-3">Update</button>
+</form>

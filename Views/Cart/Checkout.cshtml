@@ -1,0 +1,38 @@
+﻿@model CheckoutViewModel
+@{
+    ViewBag.Title = "Checkout";
+}
+<h2>Razorpay Checkout</h2>
+
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+
+<form method="POST">
+    <button id="rzp-button" type="button" class="btn btn-primary">Pay ₹@Model.Amount</button>
+</form>
+
+<script>
+    var options = {
+        "key": "@Model.RazorpayKey",
+        "amount": "@((int)(Model.Amount * 100))",
+        "currency": "INR",
+        "name": "BoxBuild",
+        "description": "Order Payment",
+        "order_id": "@Model.OrderId",
+        "handler": function (response) {
+            window.location.href = "/Cart/PaymentSuccess?paymentId=" + response.razorpay_payment_id;
+        },
+        "prefill": {
+            "name": "@Model.Name",
+            "email": "@Model.Email",
+            "contact": "@Model.Contact"
+        },
+        "theme": {
+            "color": "#3399cc"
+        }
+    };
+    var rzp1 = new Razorpay(options);
+    document.getElementById('rzp-button').onclick = function (e) {
+        rzp1.open();
+        e.preventDefault();
+    }
+</script>

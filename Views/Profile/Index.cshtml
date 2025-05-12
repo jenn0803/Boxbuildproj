@@ -1,0 +1,36 @@
+﻿@* @model User.Models.User *@
+@using BoxBuildproj.Models;
+@{
+    ViewData["Title"] = "User Profile";
+}
+
+<h2>User Profile</h2>
+<hr />
+
+@if (Model != null)
+{
+    <table class="table">
+        <tr>
+            <th>Full Name:</th>
+            <td>@Model.FullName</td>
+        </tr>
+        <tr>
+            <th>Email:</th>
+            <td>@Model.Email</td>
+        </tr>
+        <tr>
+            <th>Phone Number:</th>
+            <td>@Model.PhoneNumber</td>
+        </tr>
+        <tr>
+            <th>Address:</th>
+            <td>@Model.Address</td>
+        </tr>
+    </table>
+}
+else
+{
+    <p>No user data available.</p> <!-- ✅ Prevents crash -->
+}
+
+<a href="/" class="btn btn-primary">Back to Home</a>

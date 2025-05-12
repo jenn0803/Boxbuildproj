@@ -1,0 +1,431 @@
+﻿@{
+    ViewBag.Title = "Home";
+}
+<link rel="stylesheet" href="~/css/home.css" asp-append-version="true" />
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+
+<!-- Navbar -->
+<nav class="navbar">
+    <div class="logo">
+        <a href="/">Kanha Packaging</a>
+    </div>
+    <ul class="nav-links">
+        <li><a href="/Home">Home</a></li>
+
+        <li class="dropdown">
+            <a href="/Product" class="dropbtn">Products</a>
+            <div class="dropdown-content">
+                <a href="/Product/Corrugated">Corrugated Boxes</a>
+                <a href="/Product/Gift">Gift Boxes</a>
+                <a href="/Product/Paper">Paper Boxes</a>
+                <a href="/Product/Custom">Rigid Boxes</a>
+                <a href="/Product/Custom">Plastic Boxes</a>
+                <a href="/Product/Custom">Food Boxes</a>
+                <a href="/Product/Custom">Pharmaceutical Boxes</a>
+                <a href="/Product/Custom">Cosmetic Boxes</a>
+            </div>
+        </li>
+        <li><a href="/Home">Service</a></li>
+        <li><a href="/Home">Gallery</a></li>
+        <li><a href=" #contact" class="scroll-link">Price</a></li>
+
+    </ul>
+</nav>
+
+<!-- Search, Wishlist, Cart, Profile Section Below Navbar -->
+<div class="extra-nav">
+    <!-- Search Bar Section -->
+    <div class="search-container">
+        <input type="text" id="searchBar" placeholder="Search..." oninput="removeSearchingText()">
+        <span id="searchingText"></span>
+    </div>
+
+
+
+    <div class="icons">
+        <a href="#wishlist"><i class="fas fa-heart"></i></a> <!-- Wishlist icon -->
+        <a href="#cart.html"><i class="fas fa-shopping-cart"></i></a> <!-- Cart icon -->
+        <a href="#profile"><i class="fas fa-user"></i></a> <!-- Profile icon -->
+    </div>
+
+</div>
+
+
+
+<div id="home" class="section full-screen full-width hero-bg"
+     style="background-image: url('@Url.Content("~/images/big-bg.png")');">
+    <div class="section-wrapper block content-1170 center-relative" style="z-index: 12;">
+        <div class="content-wrapper">
+            <section class="hero text-center">
+                <div class="container hero-content">
+                    <img src="@Url.Content("~/images/logo.png")" alt="Kanha Packaging Logo" class="mb-3"
+                         style="max-width: 200px; height: auto;">
+                    <h1 class="display-4 fw-bold mb-3">BoxBuild</h1>
+                    <p class="lead mb-5">
+                        Explore our range of innovative packaging solutions designed to protect, preserve, and
+                        promote your products.
+                    </p>
+                </div>
+            </section>
+        </div>
+    </div>
+</div>
+
+<!-- Product Category Slider (Perfectly Horizontal) -->
+<div class="slider-container">
+    <button class="slide-btn left">❮</button>
+    <div class="slider">
+        <div class="card">
+            <img src="~/images/corrugated.jpg" alt="Corrugated Boxes">
+            <h3>Corrugated Boxes</h3>
+            <p>Strong & durable packaging for all needs.</p>
+            <a href="/Product/Corrugated" class="btn">View More</a>
+        </div>
+        <div class="card">
+            <img src="~/images/gift.jpg" alt="Gift Boxes">
+            <h3>Gift Boxes</h3>
+            <p>Beautiful gift boxes for special moments.</p>
+            <a href="/Product/Gift" class="btn">View More</a>
+        </div>
+        <div class="card">
+            <img src="~/images/paper.jpg" alt="Paper Boxes">
+            <h3>Paper Boxes</h3>
+            <p>Eco-friendly paper packaging solutions.</p>
+            <a href="/Product/Paper" class="btn">View More</a>
+        </div>
+        <div class="card">
+            <img src="~/images/custom.jpg" alt="Custom Boxes">
+            <h3>Custom Boxes</h3>
+            <p>Tailor-made boxes for unique requirements.</p>
+            <a href="/Product/Custom" class="btn">View More</a>
+        </div>
+    </div>
+    <button class="slide-btn right">❯</button>
+</div>
+
+
+<!-- Services Section -->
+<div id="services" class="section page-split">
+    <div class="section-wrapper block content-1170 center-relative" style="z-index: 11;">
+        <div class="bg-holder float-left">
+            <div class="split-color"></div>
+        </div>
+        <div class="sticky-spacer" style="position: relative; width: 270px; height: 509.4px; display: block; vertical-align: baseline; float: left;">
+            <div class="section-title-holder float-left">
+                <div class="section-top-image">
+                    <img src="~/images/pageIcons/box-bulleton.png" alt="">
+                </div>
+                <h2 class="entry-title">
+                    WHAT <br> WE <br> DO
+                </h2>
+                <p class="page-desc">
+                    Our modest <br> packaging solutions
+                </p>
+            </div>
+        </div>
+
+        <div class="section-content-holder float-right">
+            <div class="content-wrapper">
+                <div class="info-text">Our thoughtful packaging solutions, <br> tailored to your needs</div>
+                <p>&nbsp;</p>
+
+                <div class="one_half animate show-it">
+                    <div class="service-holder">
+                        <div class="service-img">
+                            <img src="~/images/pageIcons/Customized-Packaging.png" alt="">
+                        </div>
+                        <div class="service-txt">
+                            <h4>Customized Packaging</h4>
+                            We create packaging tailored to your product’s size, style, and branding for a perfect fit and great presentation.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="one_half last animate show-it">
+                    <div class="service-holder">
+                        <div class="service-img">
+                            <img src="~/images/pageIcons/Eco-Friendly.png" alt="">
+                        </div>
+                        <div class="service-txt">
+                            <h4>Eco-Friendly Solutions</h4>
+                            We offer sustainable packaging to protect your products and the planet.
+                        </div>
+                    </div>
+                </div>
+                <div class="clear"></div>
+
+                <div class="one_half animate show-it">
+                    <div class="service-holder">
+                        <div class="service-img">
+                            <img src="~/images/pageIcons/Solutions-Offer.png" alt="">
+                        </div>
+                        <div class="service-txt">
+                            <h4>Packaging Solutions We Offer</h4>
+                            We customize paper, paperboard, and fabric-based packaging to suit your product’s needs.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="one_half last animate show-it">
+                    <div class="service-holder">
+                        <div class="service-img">
+                            <img src="~/images/pageIcons/Committed-Excellence.png" alt="">
+                        </div>
+                        <div class="service-txt">
+                            <h4>Committed to Excellence</h4>
+                            We focus on continuously refining our processes and quality to better meet your needs and deliver exceptional packaging solutions.
+                        </div>
+                    </div>
+                </div>
+                <div class="clear"></div>
+            </div>
+        </div>
+        <div class="clear"></div>
+    </div>
+</div>
+
+
+
+@* Category Section *@
+
+
+
+
+<!-- JavaScript for Smooth Horizontal Scrolling -->
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        // Select the slider element
+        const slider = document.querySelector(".slider");
+
+        // Check if the slider exists
+        if (!slider) {
+            console.error("Slider element not found! Make sure you have a div with class 'slider'.");
+            return;
+        }
+
+        // Function to scroll left
+        function scrollLeft() {
+            slider.scrollBy({ left: -250, behavior: "smooth" });
+        }
+
+        // Function to scroll right
+        function scrollRight() {
+            slider.scrollBy({ left: 250, behavior: "smooth" });
+        }
+
+        // Attach event listeners to buttons
+        document.querySelector(".slide-btn.left").addEventListener("click", scrollLeft);
+        document.querySelector(".slide-btn.right").addEventListener("click", scrollRight);
+    });
+</script>
+<div class="container">
+    <div class="card-container">
+        <div class="card"><img src="~/images/image1.jpg" alt="Category 1"><p>Category 1</p></div>
+        <div class="card"><img src="~/images/image2.jpg" alt="Category 2"><p>Category 2</p></div>
+        <div class="card"><img src="~/images/image3.jpg" alt="Category 3"><p>Category 3</p></div>
+        <div class="card"><img src="~/images/image4.jpg" alt="Category 4"><p>Category 4</p></div>
+        <div class="card"><img src="~/images/image5.jpg" alt="Category 5"><p>Category 5</p></div>
+        <div class="card"><img src="~/images/image6.jpg" alt="Category 6"><p>Category 6</p></div>
+        <div class="card"><img src="~/images/image7.jpg" alt="Category 7"><p>Category 7</p></div>
+        <div class="card"><img src="~/images/image8.jpg" alt="Category 8"><p>Category 8</p></div>
+    </div>
+</div>
+
+@{
+    ViewData["Title"] = "Contact Page";
+}
+
+<!-- Link External CSS -->
+<link rel="stylesheet" href="~/css/contact.css" asp-append-version="true" />
+
+<!-- Contact Section -->
+<div id="contact" class="section page-split">
+    <div class="section-wrapper block content-1170 center-relative">
+        <div class="section-title-holder">
+            <div class="section-top-image">
+                <img src="~/pageIcons/box-bulleton.png" alt="">
+            </div>
+            <h2 class="entry-title">
+                GET <br> PRICE
+            </h2>
+            <p class="page-desc">
+                Fill out the <br> form
+            </p>
+        </div>
+
+        <div class="section-content-holder">
+            <div class="content-wrapper">
+                <div class="info-text">
+                    Share your requirements, and we’ll provide a tailored quote with the best solutions for you.
+                </div>
+
+                <form id="getPriceForm" enctype="multipart/form-data">
+                    <div class="contact-form">
+                        <p><input id="name" type="text" name="your-name" placeholder="Name"></p>
+                        <p><input id="number" type="text" name="your-number" placeholder="Number"></p>
+                        <p><input id="contact-email" type="email" name="your-email" placeholder="Email"></p>
+                        <p><input id="subject" type="text" name="your-subject" placeholder="Subject"></p>
+
+                        <!-- File Upload -->
+                        <div class="file-upload">
+                            <label for="images">Upload Reference Images <span class="file-name">No file chosen</span></label>
+                            <input id="images" type="file" name="images[]" accept="image/*" multiple onchange="updateFilePreview()">
+                        </div>
+                        <div class="image-preview-container" id="imagePreviewContainer"></div>
+
+                        @* <!-- Size & Packaging Select --> *@
+                        @* <div class="sizeUnit-select"> *@
+                        @*     <select id="sizeUnit"> *@
+                        @*         <option value="" disabled selected>Select Units of Measurement</option> *@
+                        @*         <option value="in">Inches (in)</option> *@
+                        @*         <option value="cm">Centimeters (cm)</option> *@
+                        @*         <option value="mm">Millimeters (mm)</option> *@
+                        @*     </select> *@
+
+                        @*     <select id="wrappingProduct"> *@
+                        @*         <option value="" disabled selected>Select Packaging Type</option> *@
+                        @*         <option value="bag">Bags</option> *@
+                        @*         <option value="box">Boxes</option> *@
+                        @*     </select> *@
+                        @* </div> *@
+
+                        @* <!-- Dimensions --> *@
+                        @* <div class="price-table"> *@
+                        @*     <input type="text" id="priceLength" placeholder="Length"> *@
+                        @*     <input type="text" id="priceWidth" placeholder="Width"> *@
+                        @*     <input type="text" id="priceHeight" placeholder="Height"> *@
+                        @* </div> *@
+
+                        @*         <p><textarea id="message" placeholder="Message"></textarea></p> *@
+                        @*         <p class="contact-submit-holder"><input type="button" value="GET PRICE"></p> *@
+                        @*     </div> *@
+                </form>
+
+                <!-- Contact Info -->
+                <div class="one_half">
+                    Flatland! A very small stage in a vast cosmic arena great turbulent clouds encyclopaedia galactica star stuff harvesting
+                </div>
+
+                <div class="one_half last">
+                    Phone: +91 74869 02922<br>
+                    E-mail: kanhapackaging@gmail.com <br>
+                    Website: www.kanhapackaging.com <br>
+                </div>
+
+                <div class="clear"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- JavaScript for Image Preview -->
+<script>
+    function updateFilePreview() {
+        const fileInput = document.getElementById("images");
+        const previewContainer = document.getElementById("imagePreviewContainer");
+        previewContainer.innerHTML = "";
+
+        for (const file of fileInput.files) {
+            const imgElement = document.createElement("img");
+            imgElement.src = URL.createObjectURL(file);
+            imgElement.onload = () => URL.revokeObjectURL(imgElement.src);
+            previewContainer.appendChild(imgElement);
+        }
+    }
+</script>
+<!-- About -->
+<div id="about" class="section page-split">
+    <div class="section-wrapper block content-1170 center-relative" style="z-index: 9;">
+        <div class="bg-holder float-left">
+            <div class="split-color"></div>
+        </div>
+        <div class="sticky-spacer"
+             style="position: relative; width: 270px; height: 519.4px; display: block; vertical-align: baseline; float: left;">
+            <div class="section-title-holder float-left">
+                <div class="section-top-image">
+                    <img src="./pageIcons/box-bulleton.png" alt="">
+                </div>
+                <h2 class="entry-title">
+                    WHO <br>WE <br>ARE
+                </h2>
+                <p class="page-desc">
+                    About our <br>
+                    small company
+                </p>
+            </div>
+        </div>
+
+        <div class="section-content-holder float-right">
+            <div class="content-wrapper">
+                <div class="info-text">
+                    About our
+                    small company
+                </div>
+                <p>&nbsp;</p>
+                <div class="stomp-content">
+                    <img src="images/logo.png" alt="Kanha Packaging Logo" class="mb-3"
+                         style="max-width: 200px; height: auto;">
+                    <h2 class="display-4 fw-bold mb-3">Kanha Packaging</h2>
+                </div>
+                <p>&nbsp;</p>
+
+                <div class="one_half">
+                    <p>
+                        At<strong> Kanha Packaging,</strong>
+                    </p>
+                    <!-- <p>&nbsp;</p> -->
+                    <p>
+                        we are a dedicated team of professionals focused on providing high-quality, customized packaging solutions.
+                        We specialize in designing and manufacturing packaging that meets the unique needs of each customer.
+                    </p>
+                </div>
+                <div class="one_half last">
+                    Though we are a small company, our passion for quality and attention to detail sets us apart.
+                    We believe in sustainability, innovation, and continuously improving our services to deliver packaging that’s not only functional but also impactful.
+                    Every project is an opportunity to fulfill our customers’ needs with care and precision.
+                </div>
+                <div class="clear"></div>
+            </div>
+        </div>
+        <div class="clear"></div>
+    </div>
+</div>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function(){
+        // When the link is clicked
+        $(".scroll-link").click(function(event){
+            event.preventDefault(); // Prevent the default anchor click behavior
+
+            var target = $(this).attr("href"); // Get the target section
+
+            // Animate scroll to the target section
+            $('html, body').animate({
+                scrollTop: $(target).offset().top
+            }, 1000); // 1000 is the scroll speed (in milliseconds)
+        });
+    });
+</script>
+<script>
+                // Function to remove the "Searching..." text when user types
+    function removeSearchingText() {
+        var searchBar = document.getElementById('searchBar');
+        var searchingText = document.getElementById('searchingText');
+
+        if (searchBar.value.length > 0) {
+            searchingText.style.display = 'none'; // Hide "Searching..." when typing
+        } else {
+            searchingText.style.display = 'block'; // Show "Searching..." when search bar is empty
+        }
+    }
+
+    // Perform search function when search button is clicked
+    function performSearch() {
+        var searchTerm = document.getElementById('searchBar').value;
+        if (searchTerm) {
+            console.log("Performing search for: " + searchTerm);
+            // Add your search logic here (e.g., fetching search results)
+        }
+    }
+
+</script>

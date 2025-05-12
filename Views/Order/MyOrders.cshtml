@@ -1,0 +1,40 @@
+﻿@model IEnumerable<BoxBuildproj.Models.Orders>
+
+@{
+    ViewData["Title"] = "My Orders";
+}
+
+<h2 class="mb-4">My Orders</h2>
+
+@if (!Model.Any())
+{
+    <p>You haven't placed any orders yet.</p>
+}
+else
+{
+    <table class="table table-bordered table-striped">
+        <thead class="table-dark">
+            <tr>
+                <th>Order ID</th>
+                <th>Total Price</th>
+                <th>Shipping Address</th>
+                <th>Billing Address</th>
+                <th>Order Status</th>
+                <th>Payment Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var order in Model)
+            {
+                <tr>
+                    <td>@order.OrderId</td>
+                    <td>₹@order.TotalPrice</td>
+                    <td>@order.ShippingAddress</td>
+                    <td>@order.BillingAddress</td>
+                    <td>@order.OrderStatus</td>
+                    <td>@order.PaymentStatus</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}

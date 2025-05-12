@@ -1,0 +1,23 @@
+﻿@model IEnumerable<BoxBuildproj.Models.Wishlist>
+
+<h2>Your Wishlist</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Product</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.Product.ProductName</td>
+                <td>
+                    <a asp-controller="Wishlist" asp-action="RemoveFromWishlist" asp-route-id="@item.WishlistId" class="btn btn-danger">Remove</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

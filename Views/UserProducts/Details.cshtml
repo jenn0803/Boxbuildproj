@@ -1,0 +1,249 @@
+﻿@* @model BoxBuildproj.Models.Productstbl *@
+
+@* @{ *@
+@*     ViewData["Title"] = Model.ProductName; *@
+@* } *@
+
+@* <h2>@Model.ProductName</h2> *@
+
+@* <div class="card"> *@
+@*     <img src="@Model.ImagePath" class="card-img-top" alt="Product Image" style="max-height: 400px; object-fit: cover;"> *@
+@*     <div class="card-body"> *@
+@*         <h5 class="card-title">@Model.ProductName</h5> *@
+@*         <p class="card-text">@Model.Description</p> *@
+@*         <p class="card-text"><strong>Price:</strong> $@Model.Price</p> *@
+@*         <a asp-controller="Cart" asp-action="AddToCart" asp-route-productId="@Model.ProductID" class="btn btn-success">Add to Cart</a> *@
+@*         <a asp-controller="Wishlist" asp-action="AddToWishlist" asp-route-productId="@Model.ProductID" class="btn btn-danger">Add to Wishlist</a> *@
+@*     </div> *@
+@* </div> *@
+
+@* <a asp-action="Index" class="btn btn-secondary mt-3">Back to Products</a> *@
+
+
+@model BoxBuildproj.Models.Productstbl
+
+@{
+    ViewData["Title"] = Model.ProductName;
+}
+<!doctype html>
+<html lang="zxx">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>BoxBuild</title>
+    <link rel="icon" href="~/pillowmart-master/img/favicon.png">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="~/pillowmart-master/css/bootstrap.min.css">
+    <!-- animate CSS -->
+    <link rel="stylesheet" href="~/pillowmart-master/css/animate.css">
+    <!-- owl carousel CSS -->
+    <link rel="stylesheet" href="~/pillowmart-master/css/owl.carousel.min.css">
+    <!-- font awesome CSS -->
+    <link rel="stylesheet" href="~/pillowmart-master/css/all.css">
+    <!-- flaticon CSS -->
+    <link rel="stylesheet" href="~/pillowmart-master/css/flaticon.css">
+    <link rel="stylesheet" href="~/pillowmart-master/css/themify-icons.css">
+    <!-- font awesome CSS -->
+    <link rel="stylesheet" href="~/pillowmart-master/css/magnific-popup.css">
+    <!-- swiper CSS -->
+    <link rel="stylesheet" href="~/pillowmart-master/css/slick.css">
+    <!-- style CSS -->
+    <link rel="stylesheet" href="~/pillowmart-master/css/style.css">
+
+
+<style>
+    .product-title {
+        font-size: 28px;
+        font-weight: bold;
+    }
+
+    .product-price {
+        font-size: 22px;
+        font-weight: bold;
+    }
+
+    .product-image {
+        position: relative;
+        text-align: center;
+    }
+
+    .main-product-img {
+        max-width: 100%;
+        height: 400px;
+        object-fit: contain;
+        cursor: zoom-in;
+        transition: transform 0.3s ease-in-out;
+    }
+
+        .main-product-img:hover {
+            transform: scale(1.2);
+        }
+
+    .thumbnail-container {
+        display: flex;
+        justify-content: center;
+        gap: 10px;
+    }
+
+    .thumbnail-img {
+        width: 60px;
+        height: 60px;
+        object-fit: cover;
+        cursor: pointer;
+        border: 2px solid #ddd;
+        transition: 0.3s ease-in-out;
+    }
+
+        .thumbnail-img:hover {
+            border-color: #007bff;
+        }
+
+</style>
+
+<script>
+        function changeImage(thumbnail) {
+        document.getElementById("mainImage").src = thumbnail.src;
+    }
+
+</script>
+</head>
+<body>
+    <!--::header part start::-->
+        <header class="main_menu home_menu">
+            <div class="container">
+                <div class="row align-items-center justify-content-center">
+                    <div class="col-lg-12">
+                        <nav class="navbar navbar-expand-lg navbar-light">
+                            <a class="navbar-brand" href="Home.cshtml">
+                                <img src="~/pillowmart-master/img/logo.png" alt="logo">
+                            </a>
+                            <button class="navbar-toggler" type="button" data-toggle="collapse"
+                                    data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                                    aria-expanded="false" aria-label="Toggle navigation">
+                                <span class="menu_icon"><i class="fas fa-bars"></i></span>
+                            </button>
+
+                            <div class="collapse navbar-collapse main-menu-item" id="navbarSupportedContent">
+                                <ul class="navbar-nav">
+                                    <li class="nav-item">
+                                        <a class="nav-link" asp-area="" asp-controller="User" asp-action="Home">Home</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" asp-area="" asp-controller="User" asp-action="About">About Us</a>
+                                    </li>
+                                    <li class="nav-item dropdown">
+                                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown_1"
+                                           role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            Product
+                                        </a>
+                                        <div class="dropdown-menu" aria-labelledby="navbarDropdown_1">
+                                            <a class="dropdown-item" asp-controller="User" asp-action="Product_list">Products</a>
+                                            <a class="dropdown-item" asp-area="" asp-controller="User" asp-action="Productsdetail">About Us</a>
+                                            @*@<a class="dropdown-item" href="single-product.html">Product Details</a>*@
+                                        </div>
+                                    </li>
+                                    <li class="nav-item dropdown">
+                                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown_3"
+                                           role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            Pages
+                                        </a>
+                                        <div class="dropdown-menu" aria-labelledby="navbarDropdown_3">
+                                            @if (User.Identity.IsAuthenticated)
+                                            {
+                                                <span class="dropdown-item">Welcome, @User.Identity.Name</span>
+                                                <a class="dropdown-item" asp-controller="User" asp-action="Checkout">Products Checkout</a>
+                                                <a class="dropdown-item" asp-controller="User" asp-action="Cart">Cart</a>
+                                                <a class="dropdown-item" href="confirmation.html">Confirmation</a>
+                                                <a class="dropdown-item" href="elements.html">Elements</a>
+                                                <a class="dropdown-item text-danger" asp-area="Identity" asp-page="/Account/Logout">Logout</a>
+                                            }
+                                            else
+                                            {
+                                                <a class="dropdown-item" href="/Identity/Account/Login">Login</a>
+                                            }
+                                        </div>
+                                    </li>
+                                    <li class="nav-item dropdown">
+                                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown_2"
+                                           role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            Blog
+                                        </a>
+                                        <div class="dropdown-menu" aria-labelledby="navbarDropdown_2">
+                                            <a class="dropdown-item" href="blog.html">Blog</a>
+                                            <a class="dropdown-item" href="single-blog.html">Single Blog</a>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+
+                            <div class="hearer_icon d-flex align-items-center">
+                                <a id="search_1" href="javascript:void(0)"><i class="ti-search"></i></a>
+                                <a href="cart.html">
+                                    <i class="flaticon-shopping-cart-black-shape"></i>
+                                </a>
+                            </div>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+            <div class="search_input" id="search_input_box">
+                <div class="container ">
+                    <form class="d-flex justify-content-between search-inner">
+                        <input type="text" class="form-control" id="search_input" placeholder="Search Here">
+                        <button type="submit" class="btn"></button>
+                        <span class="ti-close" id="close_search" title="Close Search"></span>
+                    </form>
+                </div>
+            </div>
+        </header>
+        <!-- Header part end-->
+   
+<div class="container mt-5">
+    <div class="row">
+        <!-- Product Image Section -->
+        <div class="col-md-6">
+            <div class="product-image">
+                <img id="mainImage" src="@Model.ImagePath" class="img-fluid main-product-img" alt="@Model.ProductName">
+                <div class="thumbnail-container mt-3">
+                    <img src="@Model.ImagePath" class="thumbnail-img" onclick="changeImage(this)">
+                    <img src="~/images/sample2.jpg" class="thumbnail-img" onclick="changeImage(this)">
+                    <img src="~/images/sample3.jpg" class="thumbnail-img" onclick="changeImage(this)">
+                </div>
+            </div>
+        </div>
+
+        <!-- Product Details Section -->
+        <div class="col-md-6">
+            <h2 class="product-title">@Model.ProductName</h2>
+            <p class="text-muted">@Model.Description</p>
+            <h4 class="product-price text-success">₹@Model.Price</h4>
+
+            <div class="d-flex align-items-center mt-3">
+                <label for="quantity" class="me-2">Quantity:</label>
+                <select id="quantity" class="form-select w-auto">
+                    @for (int i = 1; i <= 10; i++)
+                    {
+                        <option value="@i">@i</option>
+                    }
+                </select>
+            </div>
+
+            <!-- Add to Cart & Wishlist Buttons -->
+            <div class="mt-4">
+                <a asp-controller="Cart" asp-action="AddToCart" asp-route-productId="@Model.ProductID" class="btn btn-primary">
+                    <i class="fas fa-cart-plus"></i> Add to Cart
+                </a>
+                <a asp-controller="Wishlist" asp-action="AddToWishlist" asp-route-productId="@Model.ProductID" class="btn btn-danger">
+                    <i class="fas fa-heart"></i> Add to Wishlist
+                </a>
+            </div>
+
+            <a asp-action="Index" class="btn btn-secondary mt-4">Back to Products</a>
+        </div>
+    </div>
+</div>
+
+                </body>
+                </html>

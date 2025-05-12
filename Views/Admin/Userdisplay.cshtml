@@ -1,0 +1,77 @@
+﻿@model IEnumerable<BoxBuildproj.Areas.Identity.Data.BoxBuildprojUser>
+
+
+@{
+    ViewData["Title"] = "Manage Users";
+}
+
+<div class="container mt-5">
+    <!-- User Count Display -->
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2 class="text-primary">User Management</h2>
+        <div class="btn btn-info shadow">
+            <i class="fas fa-users"></i> Total Users: <strong>@ViewBag.TotalUsers</strong>
+        </div>
+    </div>
+
+    <!-- Users Table -->
+    <div class="table-responsive">
+        <table class="table table-bordered table-striped">
+            <thead class="thead-dark">
+                <tr>
+                    <th>#</th>
+                    <th>Email</th>
+                    <th>Username</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model.Any())
+                {
+                    int count = 1;
+                    @foreach (var user in Model)
+                    {
+                        <tr>
+                            <td>@count</td>
+                            <td>@user.Email</td>
+                            <td>@user.UserName</td>
+                            <td>
+                                <a href="#" class="btn btn-danger btn-sm">
+                                    <i class="fas fa-trash-alt"></i> Delete
+                                </a>
+                            </td>
+                        </tr>
+                        count++;
+                    }
+                }
+                else
+                {
+                    <tr>
+                        <td colspan="4" class="text-center text-muted">No users found.</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<style>
+    .btn-info {
+        font-size: 18px;
+        padding: 10px 20px;
+        display: flex;
+        align-items: center;
+    }
+
+        .btn-info i {
+            margin-right: 10px;
+        }
+
+    .table th {
+        background-color: #007bff;
+        color: white;
+    }
+</style>
+
+<!-- FontAwesome for icons -->
+<script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>

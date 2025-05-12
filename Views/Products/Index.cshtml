@@ -1,0 +1,83 @@
+﻿@* @model IEnumerable<BoxBuildproj.Models.Productstbl> *@
+
+@* <h2>Products List</h2> *@
+@* <a asp-action="Create" class="btn btn-success">Add New Product</a> *@
+
+@* <table class="table"> *@
+@*     <thead> *@
+@*         <tr> *@
+@*             <th>Product Name</th> *@
+@*             <th>Description</th> *@
+@*             <th>Price</th> *@
+@*             <th>Stock</th> *@
+@*             <th>Category</th> *@
+@*             <th>Image</th> *@
+@*             <th>Actions</th> *@
+@*         </tr> *@
+@*     </thead> *@
+@*     <tbody> *@
+@*         @foreach (var product in Model) *@
+@*         { *@
+@*             <tr> *@
+@*                 <td>@product.ProductName</td> *@
+@*                 <td>@product.Description</td> *@
+@*                 <td>@product.Price</td> *@
+@*                 <td>@product.StockQuantity</td> *@
+@*                 <td>@product.Category</td> *@
+@*                 <td> *@
+@*                     @if (!string.IsNullOrEmpty(product.ImagePath)) *@
+@*                     { *@
+@*                         <img src="@product.ImagePath" alt="Product Image" width="100" height="100" /> *@
+@*                     } *@
+@*                     else *@
+@*                     { *@
+@*                         <span>No Image</span> *@
+@*                     } *@
+@*                 </td> *@
+@*                 <td> *@
+@*                     <a asp-action="Edit" asp-route-id="@product.ProductID" class="btn btn-primary">Edit</a> *@
+@*                     <a asp-action="Delete" asp-route-id="@product.ProductID" class="btn btn-danger">Delete</a> *@
+@*                 </td> *@
+@*             </tr> *@
+@*         } *@
+@*     </tbody> *@
+@* </table> *@
+
+
+@model IEnumerable<BoxBuildproj.Models.Productstbl>
+
+<h2 class="text-center mb-4">Products List</h2>
+<a asp-action="Create" class="btn btn-success mb-3">Add New Product</a>
+
+<div class="container">
+    <div class="row">
+        @foreach (var product in Model)
+        {
+            <div class="col-md-3 mb-4">
+                <div class="card shadow-sm">
+                    @if (!string.IsNullOrEmpty(product.ImagePath))
+                    {
+                        <img src="@product.ImagePath" class="card-img-top" alt="Product Image" style="height: 200px; object-fit: cover;">
+                    }
+                    else
+                    {
+                        <img src="/images/default.png" class="card-img-top" alt="No Image" style="height: 200px; object-fit: cover;">
+                    }
+                    <div class="card-body">
+                        <h5 class="card-title">@product.ProductName</h5>
+                        <p class="card-text text-muted">@product.Description</p>
+                        <h6 class="text-success">₹@product.Price</h6>
+                        <p class="text-muted">Stock: @product.StockQuantity</p>
+                        <p class="text-muted"><strong>Category:</strong> @product.Category</p>
+                        <div class="d-flex justify-content-between">
+                            <a asp-action="Details" asp-route-id="@product.ProductID" class="btn btn-info btn-sm">View Details</a>
+                            <a asp-action="Edit" asp-route-id="@product.ProductID" class="btn btn-primary btn-sm">Edit</a>
+                            <a asp-action="Delete" asp-route-id="@product.ProductID" class="btn btn-danger btn-sm">Delete</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+

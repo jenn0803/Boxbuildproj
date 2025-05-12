@@ -1,0 +1,9 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    <div class="text-center mt-3">
+        <p class="mb-1">Don't have an account? <a asp-page="./Logout" asp-route-returnUrl="@Model.ReturnUrl" class="fw-semibold">Sign up</a></p>
+        <p><a id="resend-confirmation" asp-page="./ResendEmailConfirmation" class="text-muted">Resend Email Confirmation</a></p>
+    </div>
+}

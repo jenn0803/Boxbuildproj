@@ -1,0 +1,5 @@
+
+    private static final String SMTP_HOST = "smtp.gmail.com"; // Change to your SMTP host
+    private static final String SMTP_PORT = "587"; // SMTP Port (e.g., 587 for TLS, 465 for SSL)
+    private static final String SMTP_USER = "cs2146.assco@gmail.com"; // Your email account
+    private static final String SMTP_PASSWORD = "hfdhqszbboerbyir"; // Your email password

@@ -1,0 +1,100 @@
+﻿@* @model IEnumerable<BoxBuildproj.Models.Productstbl> *@
+
+@* @{ *@
+@*     ViewData["Title"] = "Products"; *@
+@* } *@
+
+@* <h2>Available Products</h2> *@
+
+@* <div class="row"> *@
+@*     @foreach (var product in Model) *@
+@*     { *@
+@*         <div class="col-md-4"> *@
+@*             <div class="card mb-4 shadow-sm"> *@
+@*                 <img src="@product.ImagePath" class="card-img-top" alt="Product Image" style="height: 200px; object-fit: cover;"> *@
+@*                 <div class="card-body"> *@
+@*                     <h5 class="card-title">@product.ProductName</h5> *@
+@*                     <p class="card-text">@product.Description</p> *@
+@*                     <p class="card-text"><strong>Price: </strong>$@product.Price</p> *@
+@*                     <a asp-controller="UserProducts" asp-action="Details" asp-route-id="@product.ProductID" class="btn btn-primary">View Details</a> *@
+@*                     <a asp-controller="Cart" asp-action="AddToCart" asp-route-productId="@product.ProductID" class="btn btn-success">Add to Cart</a> *@
+@*                     <a asp-controller="Wishlist" asp-action="AddToWishlist" asp-route-productId="@product.ProductID" class="btn btn-danger">Add to Wishlist</a> *@
+@*                 </div> *@
+@*             </div> *@
+@*         </div> *@
+@*     } *@
+@* </div> *@
+
+
+
+@* @model IEnumerable<BoxBuildproj.Models.Productstbl> *@
+
+@* <h2>Available Products</h2> *@
+
+@* <div class="row"> *@
+@*     @foreach (var product in Model) *@
+@*     { *@
+@*         <div class="col-md-4"> *@
+@*             <div class="card mb-4 shadow-sm"> *@
+@*                 <img src="@product.ImagePath" class="card-img-top" alt="Product Image" style="height: 200px; object-fit: cover;"> *@
+@*                 <div class="card-body"> *@
+@*                     <h5 class="card-title">@product.ProductName</h5> *@
+@*                     <p class="card-text">@product.Description</p> *@
+@*                     <p class="card-text"><strong>Price: </strong>$@product.Price</p> *@
+@*                     <a asp-controller="Cart" asp-action="AddToCart" asp-route-productId="@product.ProductID" class="btn btn-success">Add to Cart</a> *@
+@*                     <a asp-controller="Wishlist" asp-action="AddToWishlist" asp-route-productId="@product.ProductID" class="btn btn-danger">Add to Wishlist</a> *@
+@*                 </div> *@
+@*             </div> *@
+@*         </div> *@
+@*     } *@
+@* </div> *@
+
+@model IEnumerable<BoxBuildproj.Models.Productstbl>
+@using System.Security.Claims
+@inject BoxBuildproj.Data.BoxBuildprojContext _context
+@{
+    var userId = User.Identity.IsAuthenticated ? User.FindFirstValue(ClaimTypes.NameIdentifier) : null;
+}
+
+<div class="container mt-4">
+    <h2 class="text-center mb-4 text-primary fw-bold">Products</h2>
+    <div class="row">
+        @foreach (var product in Model)
+        {
+            var cartItem = userId != null ? _context.Carts.FirstOrDefault(c => c.UserId == userId && c.ProductId == product.ProductID) : null;
+
+            <div class="col-md-4 mb-4">
+                <div class="card shadow border-0">
+                    <img src="@product.ImagePath" class="card-img-top" alt="@product.ProductName">
+                    <div class="card-body text-center">
+                        <h5 class="card-title text-dark">@product.ProductName</h5>
+                        <p class="card-text text-success fw-bold">₹@product.Price</p>
+
+                        @if (cartItem == null)
+                        {
+                            <form asp-action="AddToCart" asp-controller="Cart" method="post">
+                                <input type="hidden" name="productId" value="@product.ProductID" />
+                                <label>Quantity:</label>
+                                <select name="quantity" class="form-select d-inline w-auto">
+                                    @for (int i = 1; i <= 10; i++)
+                                    {
+                                        <option value="@i">@i</option>
+                                    }
+                                </select>
+                                <button type="submit" class="btn btn-primary mt-2">
+                                    <i class="fas fa-cart-plus"></i> Add to Cart
+                                </button>
+                            </form>
+                        }
+                        else
+                        {
+                            <a asp-action="Index" asp-controller="Cart" class="btn btn-success mt-2">
+                                <i class="fas fa-shopping-cart"></i> Go to Cart
+                            </a>
+                        }
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>

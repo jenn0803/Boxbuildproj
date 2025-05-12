@@ -1,0 +1,28 @@
+﻿@model IEnumerable<BoxBuildproj.Models.Student>
+
+<h2>Student List</h2>
+<a asp-action="Create" class="btn btn-primary">Add Student</a>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Age</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var student in Model)
+        {
+            <tr>
+                <td>@student.Name</td>
+                <td>@student.Email</td>
+                <td>@student.Age</td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@student.StudentId" class="btn btn-warning">Edit</a>
+                    <a asp-action="Delete" asp-route-id="@student.StudentId" class="btn btn-danger">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
