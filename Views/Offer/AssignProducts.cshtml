@@ -1,0 +1,26 @@
+﻿@* @model OfferAssignViewModel *@
+@* @{ *@
+@*     ViewData["Title"] = "Assign Products to Offer"; *@
+@* } *@
+
+@* <h2>Assign Products to Offer</h2> *@
+
+@* <form asp-action="AssignProducts" method="post"> *@
+@*     <input type="hidden" asp-for="OfferId" /> *@
+
+@*     <div class="form-group"> *@
+@*         <label>Select Products:</label> *@
+@*         @foreach (var product in Model.AllProducts) *@
+@*         { *@
+@*             <div class="form-check"> *@
+@*                 <input class="form-check-input" type="checkbox" *@
+@*                        name="SelectedProductIds" *@
+@*                        value="@product.ProductID" *@
+@*                 @(Model.SelectedProductIds.Contains(product.ProductID) ? "checked" : "") /> *@
+@*                 <label class="form-check-label">@product.ProductName</label> *@
+@*             </div> *@
+@*         } *@
+@*     </div> *@
+
+@*     <button type="submit" class="btn btn-primary mt-3">Save</button> *@
+@* </form> *@

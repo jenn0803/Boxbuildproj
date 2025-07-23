@@ -67,17 +67,175 @@
 @* } *@
 
 
+@* @page *@
+@* @model RegisterModel *@
+@* @{ *@
+@*     ViewData["Title"] = "Register"; *@
+@* } *@
+
+@* <div class="container d-flex justify-content-center align-items-center min-vh-100"> *@
+@*     <div class="card shadow-lg p-4 rounded" style="max-width: 450px; width: 100%;"> *@
+@*         <div class="card-body"> *@
+@*             <h2 class="text-center mb-4 fw-bold">Create an Account</h2> *@
+@*             <p class="text-center text-muted">Join us and get started today!</p> *@
+
+@*             <form id="registerForm" asp-route-returnUrl="@Model.ReturnUrl" method="post"> *@
+@*                 <div asp-validation-summary="ModelOnly" class="alert alert-danger" role="alert"></div> *@
+
+@*                 <div class="form-floating mb-3"> *@
+@*                     <input asp-for="Input.Email" class="form-control" autocomplete="username" aria-required="true" placeholder="name@example.com" /> *@
+@*                     <label asp-for="Input.Email">Email</label> *@
+@*                     <span asp-validation-for="Input.Email" class="text-danger"></span> *@
+@*                 </div> *@
+
+@*                 <div class="form-floating mb-3"> *@
+@*                     <input asp-for="Input.Password" type="password" class="form-control" autocomplete="new-password" aria-required="true" placeholder="password" /> *@
+@*                     <label asp-for="Input.Password">Password</label> *@
+@*                     <span asp-validation-for="Input.Password" class="text-danger"></span> *@
+@*                 </div> *@
+
+@*                 <div class="form-floating mb-3"> *@
+@*                     <input asp-for="Input.ConfirmPassword" type="password" class="form-control" autocomplete="new-password" aria-required="true" placeholder="password" /> *@
+@*                     <label asp-for="Input.ConfirmPassword">Confirm Password</label> *@
+@*                     <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span> *@
+@*                 </div> *@
+
+@*                 <button id="registerSubmit" type="submit" class="btn btn-primary w-100 py-2">Register</button> *@
+
+@*                 <div class="text-center mt-3"> *@
+@*                     <p class="mb-1">Already have an account? <a asp-page="./Login" asp-route-returnUrl="@Model.ReturnUrl" class="fw-semibold">Sign in</a></p> *@
+@*                 </div> *@
+@*             </form> *@
+
+@*             @if ((Model.ExternalLogins?.Count ?? 0) > 0) *@
+@*             { *@
+@*                 <hr class="my-4" /> *@
+@*                 <h5 class="text-center">Or register with</h5> *@
+@*                 <div class="d-flex justify-content-center gap-2"> *@
+@*                     @foreach (var provider in Model.ExternalLogins!) *@
+@*                     { *@
+@*                         <form id="external-account" asp-page="./ExternalLogin" asp-route-returnUrl="@Model.ReturnUrl" method="post"> *@
+@*                             <button type="submit" class="btn btn-outline-secondary" name="provider" value="@provider.Name"> *@
+@*                                 @provider.DisplayName *@
+@*                             </button> *@
+@*                         </form> *@
+@*                     } *@
+@*                 </div> *@
+@*             } *@
+@*         </div> *@
+@*     </div> *@
+@* </div> *@
+
+@* @section Scripts { *@
+@*     <partial name="_ValidationScriptsPartial" /> *@
+@* } *@
+
+
 @page
 @model RegisterModel
 @{
     ViewData["Title"] = "Register";
 }
 
+<!-- 💅 Custom Style -->
+<style>
+    body {
+        background: linear-gradient(135deg, #f0f4ff, #e8f0ff);
+        font-family: 'Poppins', sans-serif;
+    }
+
+    .register-card {
+        max-width: 450px;
+        width: 100%;
+        background-color: #fffdfc;
+        border-radius: 20px;
+        box-shadow: 0 8px 25px rgba(146, 162, 253, 0.2);
+        animation: fadeIn 1s ease-in;
+    }
+
+    h2 {
+        color: #5d5fef;
+        font-weight: 700;
+    }
+
+    .form-floating > label {
+        color: #888;
+    }
+
+    .form-control {
+        border-radius: 12px;
+        transition: all 0.3s;
+    }
+
+        .form-control:focus {
+            box-shadow: 0 0 8px rgba(146, 162, 253, 0.5);
+            border-color: #5d5fef;
+        }
+
+    .btn-primary {
+        background-color: #5d5fef;
+        border: none;
+        border-radius: 12px;
+        font-weight: 600;
+        transition: transform 0.3s ease, background-color 0.3s;
+    }
+
+        .btn-primary:hover {
+            background-color: #3b3df5;
+            transform: scale(1.03);
+        }
+
+    .card-body {
+        animation: slideUp 0.7s ease-in-out;
+    }
+
+    .text-muted {
+        font-size: 0.9rem;
+        color: #7a7a7a !important;
+    }
+
+    .btn-outline-secondary {
+        border-radius: 10px;
+    }
+
+    /* Animations */
+    @@keyframes fadeIn {
+        from
+
+    {
+        opacity: 0;
+        transform: translateY(40px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    }
+
+    @@keyframes slideUp {
+        from
+
+    {
+        transform: translateY(30px);
+        opacity: 0;
+    }
+
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+
+    }
+</style>
+
+<!-- 💖 Cute Register Card -->
 <div class="container d-flex justify-content-center align-items-center min-vh-100">
-    <div class="card shadow-lg p-4 rounded" style="max-width: 450px; width: 100%;">
+    <div class="card register-card shadow p-4">
         <div class="card-body">
-            <h2 class="text-center mb-4 fw-bold">Create an Account</h2>
-            <p class="text-center text-muted">Join us and get started today!</p>
+            <h2 class="text-center mb-3">Create an Account 💫</h2>
+            <p class="text-center text-muted">Join our sweet little community ✨</p>
 
             <form id="registerForm" asp-route-returnUrl="@Model.ReturnUrl" method="post">
                 <div asp-validation-summary="ModelOnly" class="alert alert-danger" role="alert"></div>
@@ -100,21 +258,26 @@
                     <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
                 </div>
 
-                <button id="registerSubmit" type="submit" class="btn btn-primary w-100 py-2">Register</button>
+                <button id="registerSubmit" type="submit" class="btn btn-primary w-100 py-2 mt-2">
+                    🌸 Register
+                </button>
 
                 <div class="text-center mt-3">
-                    <p class="mb-1">Already have an account? <a asp-page="./Login" asp-route-returnUrl="@Model.ReturnUrl" class="fw-semibold">Sign in</a></p>
+                    <p class="mb-1">
+                        Already have an account?
+                        <a asp-page="./Login" asp-route-returnUrl="@Model.ReturnUrl" class="fw-semibold text-decoration-none" style="color:#5d5fef;">Sign in</a>
+                    </p>
                 </div>
             </form>
 
             @if ((Model.ExternalLogins?.Count ?? 0) > 0)
             {
                 <hr class="my-4" />
-                <h5 class="text-center">Or register with</h5>
+                <h5 class="text-center text-muted">Or register with</h5>
                 <div class="d-flex justify-content-center gap-2">
                     @foreach (var provider in Model.ExternalLogins!)
                     {
-                        <form id="external-account" asp-page="./ExternalLogin" asp-route-returnUrl="@Model.ReturnUrl" method="post">
+                        <form asp-page="./ExternalLogin" asp-route-returnUrl="@Model.ReturnUrl" method="post">
                             <button type="submit" class="btn btn-outline-secondary" name="provider" value="@provider.Name">
                                 @provider.DisplayName
                             </button>
@@ -126,6 +289,7 @@
     </div>
 </div>
 
+<!-- 🎀 Scripts -->
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
 }

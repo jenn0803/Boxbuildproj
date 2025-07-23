@@ -1,0 +1,12 @@
+﻿@model BoxBuildproj.Models.Offer
+
+@if (Model != null)
+{
+    <div class="bg-warning text-dark text-center py-2 fw-bold">
+        🔥 @Model.Title — @Model.DiscountPercentage% OFF! ⏳ Offer ends on @Model.EndDate.ToString("dd MMM yyyy")
+    </div>
+}
+else
+{
+    <div>No offer found.</div>
+}

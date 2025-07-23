@@ -25,10 +25,18 @@ builder.Services.AddTransient<IEmailSender, EmailService>();
 builder.Services.AddIdentity<BoxBuildprojUser, IdentityRole>(options =>
 {
     // Set to false if you don't require email confirmation for login
-    options.SignIn.RequireConfirmedAccount = false;
+    options.SignIn.RequireConfirmedAccount = true;
 })
 .AddEntityFrameworkStores<BoxBuildprojContext>()
 .AddDefaultTokenProviders();
+
+builder.Services.ConfigureApplicationCookie(options =>
+{
+    options.LoginPath = "/Identity/Account/Login"; // 👈 Path to your login page
+    options.AccessDeniedPath = "/Identity/Account/AccessDenied"; // Optional
+});
+
+
 
 // Add HttpContextAccessor to access the logged-in user in services
 builder.Services.AddHttpContextAccessor();

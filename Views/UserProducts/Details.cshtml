@@ -100,6 +100,14 @@
             border-color: #007bff;
         }
 
+        .main-product-img {
+            transition: transform 0.3s ease;
+        }
+
+            .main-product-img:hover {
+                transform: scale(1.05);
+            }
+
 </style>
 
 <script>
@@ -110,140 +118,187 @@
 </script>
 </head>
 <body>
-    <!--::header part start::-->
-        <header class="main_menu home_menu">
-            <div class="container">
-                <div class="row align-items-center justify-content-center">
-                    <div class="col-lg-12">
-                        <nav class="navbar navbar-expand-lg navbar-light">
-                            <a class="navbar-brand" href="Home.cshtml">
-                                <img src="~/pillowmart-master/img/logo.png" alt="logo">
+    <header style="background: rgba(255, 255, 255, 0.85); backdrop-filter: blur(10px); box-shadow: 0 8px 24px rgba(0,0,0,0.1);">
+        <div class="container py-3">
+            <nav class="navbar navbar-expand-lg navbar-light">
+                <!-- Logo -->
+                <a class="navbar-brand d-flex align-items-center" asp-controller="User" asp-action="Home">
+                    <img src="~/pillowmart-master/img/logobox.png" asp-append-version="true" alt="logo" style="height: 45px;" />
+                </a>
+
+                <!-- Toggler for mobile -->
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <!-- Nav items -->
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav align-items-center ms-auto" style="gap: 30px; font-weight: 500; font-size: 16px;">
+                        <li class="nav-item">
+                            <a class="nav-link link-animate" asp-controller="User" asp-action="Home">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link link-animate" asp-controller="User" asp-action="About">About</a>
+                        </li>
+
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle link-animate" href="#" role="button" data-bs-toggle="dropdown">Product</a>
+                            <div class="dropdown-menu dropdown-animated shadow rounded">
+                                <a class="dropdown-item" asp-controller="UserProducts" asp-action="Product_list">Product List</a>
+                            </div>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle link-animate" href="#" role="button" data-bs-toggle="dropdown">Pages</a>
+                            <div class="dropdown-menu dropdown-animated shadow rounded">
+                                @if (User.Identity.IsAuthenticated)
+                                {
+                                    <span class="dropdown-item text-muted">Hi, @User.Identity.Name</span>
+                                    <a class="dropdown-item" asp-controller="Profile" asp-action="Index">My Profile</a>
+                                    <a class="dropdown-item" asp-controller="Checkout" asp-action="Index">Checkout</a>
+                                    <a class="dropdown-item" asp-controller="Cart" asp-action="Index">Cart</a>
+                                    <a class="dropdown-item" asp-controller="Order" asp-action="MyOrders">My Orders</a>
+                                }
+                                else
+                                {
+                                    <a class="dropdown-item" asp-area="Identity" asp-page="/Account/Login">Login</a>
+                                    <a class="dropdown-item" asp-area="Identity" asp-page="/Account/Register">Register</a>
+                                }
+                            </div>
+                        </li>
+
+                        @if (User.Identity.IsAuthenticated)
+                        {
+                            <li class="nav-item">
+                                <form method="post" asp-area="Identity" asp-page="/Account/Logout" class="d-inline">
+                                    @Html.AntiForgeryToken()
+                                    <button type="submit" class="btn btn-sm btn-outline-danger">Logout</button>
+                                </form>
+                            </li>
+                        }
+
+
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle link-animate" href="#" role="button" data-bs-toggle="dropdown">Blog</a>
+                            <div class="dropdown-menu dropdown-animated shadow rounded">
+                                <a class="dropdown-item" asp-controller="Blog" asp-action="Index">Blog</a>
+                                <a class="dropdown-item" asp-controller="Blog" asp-action="SingleBlog">Single Blog</a>
+                            </div>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link link-animate" asp-controller="Contact" asp-action="Index">Contact</a>
+                        </li>
+
+                        <!-- Icons -->
+
+                        <li class="nav-item ms-2">
+                            <a asp-controller="Cart" asp-action="Index" class="text-dark icon-animate" style="font-size: 20px;">
+                                <i class="flaticon-shopping-cart-black-shape"></i>
                             </a>
-                            <button class="navbar-toggler" type="button" data-toggle="collapse"
-                                    data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
-                                    aria-expanded="false" aria-label="Toggle navigation">
-                                <span class="menu_icon"><i class="fas fa-bars"></i></span>
-                            </button>
-
-                            <div class="collapse navbar-collapse main-menu-item" id="navbarSupportedContent">
-                                <ul class="navbar-nav">
-                                    <li class="nav-item">
-                                        <a class="nav-link" asp-area="" asp-controller="User" asp-action="Home">Home</a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link" asp-area="" asp-controller="User" asp-action="About">About Us</a>
-                                    </li>
-                                    <li class="nav-item dropdown">
-                                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown_1"
-                                           role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                            Product
-                                        </a>
-                                        <div class="dropdown-menu" aria-labelledby="navbarDropdown_1">
-                                            <a class="dropdown-item" asp-controller="User" asp-action="Product_list">Products</a>
-                                            <a class="dropdown-item" asp-area="" asp-controller="User" asp-action="Productsdetail">About Us</a>
-                                            @*@<a class="dropdown-item" href="single-product.html">Product Details</a>*@
-                                        </div>
-                                    </li>
-                                    <li class="nav-item dropdown">
-                                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown_3"
-                                           role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                            Pages
-                                        </a>
-                                        <div class="dropdown-menu" aria-labelledby="navbarDropdown_3">
-                                            @if (User.Identity.IsAuthenticated)
-                                            {
-                                                <span class="dropdown-item">Welcome, @User.Identity.Name</span>
-                                                <a class="dropdown-item" asp-controller="User" asp-action="Checkout">Products Checkout</a>
-                                                <a class="dropdown-item" asp-controller="User" asp-action="Cart">Cart</a>
-                                                <a class="dropdown-item" href="confirmation.html">Confirmation</a>
-                                                <a class="dropdown-item" href="elements.html">Elements</a>
-                                                <a class="dropdown-item text-danger" asp-area="Identity" asp-page="/Account/Logout">Logout</a>
-                                            }
-                                            else
-                                            {
-                                                <a class="dropdown-item" href="/Identity/Account/Login">Login</a>
-                                            }
-                                        </div>
-                                    </li>
-                                    <li class="nav-item dropdown">
-                                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown_2"
-                                           role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                            Blog
-                                        </a>
-                                        <div class="dropdown-menu" aria-labelledby="navbarDropdown_2">
-                                            <a class="dropdown-item" href="blog.html">Blog</a>
-                                            <a class="dropdown-item" href="single-blog.html">Single Blog</a>
-                                        </div>
-                                    </li>
-                                </ul>
-                            </div>
-
-                            <div class="hearer_icon d-flex align-items-center">
-                                <a id="search_1" href="javascript:void(0)"><i class="ti-search"></i></a>
-                                <a href="cart.html">
-                                    <i class="flaticon-shopping-cart-black-shape"></i>
-                                </a>
-                            </div>
-                        </nav>
-                    </div>
+                        </li>
+                    </ul>
                 </div>
-            </div>
-            <div class="search_input" id="search_input_box">
-                <div class="container ">
-                    <form class="d-flex justify-content-between search-inner">
-                        <input type="text" class="form-control" id="search_input" placeholder="Search Here">
-                        <button type="submit" class="btn"></button>
-                        <span class="ti-close" id="close_search" title="Close Search"></span>
-                    </form>
-                </div>
-            </div>
-        </header>
-        <!-- Header part end-->
-   
-<div class="container mt-5">
-    <div class="row">
-        <!-- Product Image Section -->
-        <div class="col-md-6">
-            <div class="product-image">
-                <img id="mainImage" src="@Model.ImagePath" class="img-fluid main-product-img" alt="@Model.ProductName">
-                <div class="thumbnail-container mt-3">
-                    <img src="@Model.ImagePath" class="thumbnail-img" onclick="changeImage(this)">
-                    <img src="~/images/sample2.jpg" class="thumbnail-img" onclick="changeImage(this)">
-                    <img src="~/images/sample3.jpg" class="thumbnail-img" onclick="changeImage(this)">
-                </div>
-            </div>
+            </nav>
         </div>
+    </header>
 
-        <!-- Product Details Section -->
-        <div class="col-md-6">
-            <h2 class="product-title">@Model.ProductName</h2>
-            <p class="text-muted">@Model.Description</p>
-            <h4 class="product-price text-success">₹@Model.Price</h4>
+    <div class="container mt-5">
+        <div class="row bg-white p-4 shadow rounded">
+            <!-- Product Image Section -->
+            <div class="col-md-6 d-flex justify-content-center align-items-center">
+                <div class="product-image p-3 border rounded">
+                    <img src="@Model.ImagePath" alt="@Model.ProductName" class="img-fluid rounded main-product-img" style="max-height: 400px;" />
+                </div>
+            </div>
 
-            <div class="d-flex align-items-center mt-3">
-                <label for="quantity" class="me-2">Quantity:</label>
-                <select id="quantity" class="form-select w-auto">
-                    @for (int i = 1; i <= 10; i++)
+            <!-- Product Details Section -->
+            <div class="col-md-6">
+                <h2 class="fw-bold">@Model.ProductName</h2>
+                <p class="text-muted fs-5">@Model.Description</p>
+                @{
+                    var offer = Model.ProductOffer?.FirstOrDefault()?.Offer;
+                    decimal finalPrice = Model.Price;
+
+                    if (offer != null && offer.DiscountPercentage > 0)
                     {
-                        <option value="@i">@i</option>
+                        finalPrice = Model.Price - (Model.Price * offer.DiscountPercentage / 100);
                     }
-                </select>
-            </div>
+                }
 
-            <!-- Add to Cart & Wishlist Buttons -->
-            <div class="mt-4">
-                <a asp-controller="Cart" asp-action="AddToCart" asp-route-productId="@Model.ProductID" class="btn btn-primary">
-                    <i class="fas fa-cart-plus"></i> Add to Cart
-                </a>
-                <a asp-controller="Wishlist" asp-action="AddToWishlist" asp-route-productId="@Model.ProductID" class="btn btn-danger">
-                    <i class="fas fa-heart"></i> Add to Wishlist
-                </a>
-            </div>
+                @if (offer != null && offer.DiscountPercentage > 0)
+                {
+                    <h4 class="text-success fw-semibold mb-1">
+                        ₹@finalPrice.ToString("0.00")
+                        <small class="text-muted ms-2"><del>₹@Model.Price.ToString("0.00")</del></small>
+                    </h4>
+                    <span class="badge bg-danger mb-3">Save @offer.DiscountPercentage% - @offer.Title</span>
+                }
+                else
+                {
+                    <h4 class="text-success fw-semibold mb-3">₹@Model.Price.ToString("0.00")</h4>
+                }
 
-            <a asp-action="Index" class="btn btn-secondary mt-4">Back to Products</a>
+
+
+                <!-- Quantity Selector -->
+                <div class="d-flex align-items-center mb-3">
+                    <label for="quantity" class="me-2 fw-semibold">Quantity:</label>
+                    <select id="quantity" class="form-select w-auto shadow-sm">
+                        @for (int i = 1; i <= 10; i++)
+                        {
+                            <option value="@i">@i</option>
+                        }
+                    </select>
+                </div>
+
+                <!-- Add to Cart & Wishlist Buttons -->
+                <div class="d-flex gap-3 mt-4">
+                    <form asp-controller="Cart" asp-action="AddToCart" method="post" class="d-flex gap-3 mt-4">
+                        <input type="hidden" name="productId" value="@Model.ProductID" />
+                        <input type="hidden" name="price" value="@finalPrice" />
+                        <div>
+                            <select id="quantity" name="quantity" class="form-select w-auto shadow-sm">
+                                @for (int i = 1; i <= 10; i++)
+                                {
+                                    <option value="@i">@i</option>
+                                }
+                            </select>
+                        </div>
+                        <button type="submit" class="btn btn-primary btn-lg px-4 shadow">
+                            <i class="fas fa-shopping-cart me-1"></i> Add to Cart
+                        </button>
+                        <a asp-controller="Wishlist" asp-action="AddToWishlist" asp-route-productId="@Model.ProductID" class="btn btn-outline-danger btn-lg px-4 shadow">
+                            <i class="fas fa-heart me-1"></i> Wishlist
+                        </a>
+                    </form>
+
+                   
+                </div>
+
+                <a asp-action="Product_list" class="btn btn-link mt-4 text-decoration-none"><i class="fas fa-arrow-left me-1"></i> Back to Products</a>
+            </div>
         </div>
     </div>
-</div>
+
+    @if (ViewBag.RecentlyViewed != null)
+    {
+        <h3 class="mt-5">Recently Viewed</h3>
+        <div class="row">
+            @foreach (var item in (List<BoxBuildproj.Models.Productstbl>)ViewBag.RecentlyViewed)
+            {
+                <div class="col-md-3">
+                    <div class="card mb-3">
+                        <img src="@item.ImagePath" class="card-img-top" alt="@item.ProductName">
+                        <div class="card-body">
+                            <h5 class="card-title">@item.ProductName</h5>
+                            <p class="card-text">₹@item.Price</p>
+                            <a href="@Url.Action("Details","UserProducts", new { id = item.ProductID })" class="btn btn-primary btn-sm">View</a>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    }
 
                 </body>
                 </html>

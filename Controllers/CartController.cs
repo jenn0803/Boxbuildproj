@@ -250,7 +250,10 @@ using BoxBuildproj.Data;
 using BoxBuildproj.Models;
 using BoxBuildproj.Areas.Identity.Data;
 using Razorpay.Api;
+using Microsoft.AspNetCore.Authorization;
 
+
+[Authorize]
 public class CartController : Controller
 {
     private readonly BoxBuildprojContext _context;
@@ -269,12 +272,29 @@ public class CartController : Controller
         if (user == null) return RedirectToAction("Login", "Account");
 
         var cartItems = await _context.Carts
-            .Include(c => c.Product) // Ensure product details are fetched
+            .Include(c => c.Product)
+                .ThenInclude(p => p.ProductOffer)
+                    .ThenInclude(po => po.Offer)
             .Where(c => c.UserId == user.Id)
             .ToListAsync();
 
+        ViewBag.Subtotal = cartItems.Sum(item =>
+        {
+            var price = item.Product.Price;
+            var offer = item.Product.ProductOffer?.FirstOrDefault()?.Offer;
+            if (offer != null && offer.StartDate <= DateTime.Now && offer.EndDate >= DateTime.Now)
+            {
+                var discount = (offer.DiscountPercentage / 100.0m) * price;
+                price -= discount;
+            }
+            return price * item.Quantity;
+        });
+
+
         return View(cartItems);
     }
+
+
 
     // ✅ Update Cart Quantity (Ensure min value is 1)
     [HttpPost]

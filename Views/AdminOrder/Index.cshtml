@@ -1,0 +1,402 @@
+﻿@model List<BoxBuildproj.Models.OrderViewModel>
+
+
+@{
+    ViewData["Title"] = "Admin Dashboard";
+    var username = User.Identity.IsAuthenticated ? User.Identity.Name : "Admin";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>@ViewData["Title"]</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet" />
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet" />
+
+    <style>
+        * {
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            margin: 0;
+            padding-left: 230px; /* Avoid content under sidebar */
+            background: linear-gradient(135deg, +#f8f9ff, #eae6ff);
+            padding-top:90px;
+        }
+
+        .header {
+            height: 70px;
+            background: linear-gradient(to right, #7f6cff, #c78bff);
+            color: white;
+            padding: 0 30px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            left: 0;
+            z-index: 1000;
+        }
+
+            .header h3 {
+                margin: 0;
+                font-weight: 600;
+            }
+
+        .profile-dropdown {
+            display: flex;
+            align-items: center;
+        }
+
+            .profile-dropdown i {
+                font-size: 1.5rem;
+                margin-right: 10px;
+            }
+
+        .sidebar {
+            position: fixed;
+            top: 70px;
+            left: 0;
+            height: 100%;
+            width: 230px;
+            background: #6c4cf1;
+            color: white;
+            padding-top: 30px;
+            z-index: 999;
+        }
+
+            .sidebar a {
+                color: white;
+                text-decoration: none;
+                display: block;
+                padding: 12px 20px;
+                font-size: 1rem;
+                transition: 0.3s;
+            }
+
+                .sidebar a:hover {
+                    background-color: #8265ff;
+                    border-left: 4px solid #fff;
+                }
+
+        .main-content {
+            padding: 110px 30px 30px 30px; /* Adjust for header + sidebar */
+        }
+
+        .card-box {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.07);
+            padding: 25px;
+            transition: 0.3s ease;
+            text-align: center;
+        }
+
+            .card-box:hover {
+                transform: translateY(-6px);
+            }
+
+            .card-box i {
+                font-size: 2.8rem;
+                color: #6c4cf1;
+            }
+
+            .card-box h5 {
+                margin-top: 15px;
+                font-weight: 600;
+            }
+
+            .card-box a {
+                margin-top: 15px;
+                display: inline-block;
+                padding: 8px 20px;
+                border-radius: 30px;
+                background-color: #6c4cf1;
+                color: white;
+                text-decoration: none;
+            }
+
+        .widget-box {
+            background-color: rgba(255, 255, 255, 0.85);
+            border-radius: 20px;
+            padding: 20px;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.05);
+        }
+
+            .widget-box h6 {
+                font-weight: 600;
+            }
+
+        .btn-logout {
+            background: white;
+            border: none;
+            color: #6c4cf1;
+            font-weight: 600;
+            width: 90%;
+            margin: 20px auto;
+            display: block;
+            border-radius: 30px;
+            padding: 10px;
+        }
+
+            .btn-logout:hover {
+                background-color: #eae2ff;
+            }
+
+        /* Responsive Fixes */
+        @@media (max-width: 768px) {
+            body {
+                padding-left: 0;
+            }
+
+            .sidebar {
+                width: 100%;
+                height: auto;
+                position: relative;
+            }
+
+            .header {
+                flex-direction: column;
+                align-items: flex-start;
+                height: auto;
+                padding: 15px;
+            }
+
+            .main-content {
+                margin-left: 0;
+                padding-top: 140px;
+            }
+        }
+
+        h2 {
+            text-align: center;
+            font-weight: 700;
+            color: #6c4ec1;
+            margin-bottom: 2rem;
+        }
+
+        .table-card {
+            background-color: #fff;
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: 0 10px 20px rgba(140, 100, 255, 0.1);
+        }
+
+        .table thead {
+            background: linear-gradient(to right, #cabdff, #e5d1ff);
+            color: #4a2a8c;
+        }
+
+        .table th, .table td {
+            vertical-align: middle;
+        }
+
+        .btn-primary {
+            background-color: #7a5fef;
+            border: none;
+            padding: 0.4rem 1rem;
+            font-weight: 600;
+            border-radius: 8px;
+            transition: 0.3s;
+        }
+
+            .btn-primary:hover {
+                background-color: #684bd8;
+            }
+
+        .collapse table {
+            background-color: #f9f6ff;
+            border-radius: 12px;
+        }
+
+        .product-img {
+            width: 50px;
+            height: 50px;
+            object-fit: cover;
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(100, 100, 100, 0.1);
+        }
+
+        .order-total {
+            font-weight: bold;
+            color: #4a2a8c;
+        }
+
+        .badge-status {
+            padding: 0.5rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+        }
+
+        .badge-pending {
+            background-color: #ffe6a7;
+            color: #665100;
+        }
+
+        .badge-completed {
+            background-color: #c3f7cb;
+            color: #165c27;
+        }
+
+        .badge-cancelled {
+            background-color: #ffd6d6;
+            color: #a00000;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header -->
+    <div class="header">
+        <h3>Admin Dashboard</h3>
+        <div class="profile-dropdown">
+            <i class="fas fa-user-circle"></i>
+            <span>@username</span>
+        </div>
+    </div>
+
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <a href="@Url.Action("Index", "Admin")"><i class="fas fa-home me-2"></i>Dashboard</a>
+        <a href="@Url.Action("Userdisplay", "Admin")"><i class="fas fa-users me-2"></i>Manage Users</a>
+        <a href="@Url.Action("Index", "Products", new { area = "Admin" })"><i class="fas fa-box me-2"></i>Manage Products</a>
+        <a href="@Url.Action("Index", "AdminOrder")"><i class="fas fa-shopping-cart me-2"></i>Orders</a>
+        <a href="@Url.Action("MailInbox", "Admin")"><i class="fas fa-envelope me-2"></i>Inbox</a>
+        <a href="@Url.Action("Profile", "Admin")"><i class="fas fa-user me-2"></i>Profile</a>
+        <a asp-controller="AdminOffers" asp-action="Index" class="nav-link">Manage Offers</a>
+        <a asp-controller="AdminOffers" asp-action="AssignOffer" class="nav-link">Assign Offers to Products</a>
+
+        <form asp-controller="Manage" asp-action="Logout" method="post">
+            <button class="btn-logout"><i class="fas fa-sign-out-alt me-2"></i>Logout</button>
+        </form>
+    </div>
+
+    <div class="table-card">
+        <h2>📦 All Orders</h2>
+
+        <div class="mb-3 d-flex justify-content-end">
+            <label for="sortOrders" class="form-label me-2">Sort by:</label>
+            <select id="sortOrders" class="form-select w-auto">
+                <option value="date_desc">Order Date (Newest)</option>
+                <option value="date_asc">Order Date (Oldest)</option>
+                <option value="amount_desc">Total Amount (High to Low)</option>
+                <option value="amount_asc">Total Amount (Low to High)</option>
+                <option value="name_asc">Customer Name (A-Z)</option>
+                <option value="name_desc">Customer Name (Z-A)</option>
+            </select>
+        </div>
+
+
+        <table class="table table-bordered table-hover align-middle">
+            <thead>
+                <tr>
+                    <th>Order ID</th>
+                    <th>Customer</th>
+                    <th>Email</th>
+                    <th> Shipping Address</th>
+                    <th>Order Date</th>
+                    <th>Total</th>
+                    <th>Status</th>
+                    <th>Products</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var order in Model)
+                {
+                    <tr>
+                        <td>#@order.OrderId</td>
+                        <td>@order.CustomerName</td>
+                        <td>@order.CustomerEmail</td>
+                        <td>@order.ShippingAddress</td>
+                        <td>@order.OrderDate.ToString("dd MMM yyyy")</td>
+                        <td class="order-total">₹@order.TotalAmount</td>
+                        <td>
+                            @{
+                                var status = order.Status.ToLower();
+                                var badgeClass = status switch
+                                {
+                                    "pending" => "badge-status badge-pending",
+                                    "completed" => "badge-status badge-completed",
+                                    "cancelled" => "badge-status badge-cancelled",
+                                    _ => "badge-status bg-light text-dark"
+                                };
+                            }
+                            <span class="@badgeClass">@order.Status</span>
+                        </td>
+                        <td>
+                            <button class="btn btn-sm btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#details_@order.OrderId" aria-expanded="false" aria-controls="details_@order.OrderId">
+                                View Products
+                            </button>
+
+                            <div class="collapse mt-2" id="details_@order.OrderId">
+                                <table class="table table-sm mt-3">
+                                    <thead>
+                                        <tr>
+                                            <th>Product</th>
+                                            <th>Image</th>
+                                            <th>Quantity</th>
+                                            <th>Price</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var detail in order.OrderDetails)
+                                        {
+                                            <tr>
+                                                <td>@detail.ProductName</td>
+                                                <td><img src="@detail.ImagePath" alt="@detail.ProductName" class="product-img" /></td>
+                                                <td>@detail.Quantity</td>
+                                                <td>₹@detail.Price</td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+
+                                <script>
+                                    document.getElementById("sortOrders").addEventListener("change", function () {
+                                        let sortBy = this.value;
+                                        let rows = Array.from(document.querySelectorAll("tbody tr"));
+                                        let tbody = document.querySelector("tbody");
+
+                                        rows.sort((a, b) => {
+                                            switch (sortBy) {
+                                                case "date_desc":
+                                                    return new Date(b.cells[4].innerText) - new Date(a.cells[4].innerText);
+                                                case "date_asc":
+                                                    return new Date(a.cells[4].innerText) - new Date(b.cells[4].innerText);
+                                                case "amount_desc":
+                                                    return parseFloat(b.cells[5].innerText.replace("₹", "")) - parseFloat(a.cells[5].innerText.replace("₹", ""));
+                                                case "amount_asc":
+                                                    return parseFloat(a.cells[5].innerText.replace("₹", "")) - parseFloat(b.cells[5].innerText.replace("₹", ""));
+                                                case "name_asc":
+                                                    return a.cells[1].innerText.localeCompare(b.cells[1].innerText);
+                                                case "name_desc":
+                                                    return b.cells[1].innerText.localeCompare(a.cells[1].innerText);
+                                            }
+                                        });
+
+                                        // Clear and re-append sorted rows
+                                        tbody.innerHTML = "";
+                                        rows.forEach(row => tbody.appendChild(row));
+                                    });
+                                </script>
+
+                            </div>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Bootstrap JS Bundle -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

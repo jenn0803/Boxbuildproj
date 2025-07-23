@@ -1,40 +1,264 @@
-﻿@model IEnumerable<BoxBuildproj.Models.Orders>
+﻿@model IEnumerable<BoxBuildproj.Models.Orders> 
 
-@{
-    ViewData["Title"] = "My Orders";
+@{ 
+  ViewData["Title"] = "My Orders"; 
 }
 
-<h2 class="mb-4">My Orders</h2>
+<html>
 
-@if (!Model.Any())
-{
-    <p>You haven't placed any orders yet.</p>
-}
-else
-{
-    <table class="table table-bordered table-striped">
-        <thead class="table-dark">
-            <tr>
-                <th>Order ID</th>
-                <th>Total Price</th>
-                <th>Shipping Address</th>
-                <th>Billing Address</th>
-                <th>Order Status</th>
-                <th>Payment Status</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var order in Model)
-            {
-                <tr>
-                    <td>@order.OrderId</td>
-                    <td>₹@order.TotalPrice</td>
-                    <td>@order.ShippingAddress</td>
-                    <td>@order.BillingAddress</td>
-                    <td>@order.OrderStatus</td>
-                    <td>@order.PaymentStatus</td>
-                </tr>
-            }
-        </tbody>
-    </table>
-}
+<head>
+    <style>
+
+        .orders-container {
+            max-width: 1000px;
+            margin: 60px auto;
+            background: #ffffff;
+            border-radius: 20px;
+            padding: 30px 40px;
+            box-shadow: 0 10px 30px rgba(168, 118, 255, 0.3);
+            background-image: linear-gradient(to top right, #fdf6ff, #f8e8ff);
+        }
+
+        h2 {
+            text-align: center;
+            color: #7c4dff;
+            font-size: 32px;
+            margin-bottom: 30px;
+        }
+
+        .no-orders {
+            text-align: center;
+            color: #999;
+            font-size: 18px;
+            padding: 30px 0;
+        }
+
+        .text-purple {
+            color: #7c4dff;
+        }
+
+        .order-box {
+            background-color: #ffffff;
+            border-radius: 15px;
+            border: 1px solid #e3c9ff;
+            box-shadow: 0 5px 15px rgba(128, 0, 128, 0.1);
+        }
+
+        .table th {
+            background-color: #e1bee7;
+            color: #4a148c;
+        }
+
+        .table td, .table th {
+            vertical-align: middle;
+        }
+
+
+        thead {
+            background-color: #d1c4e9;
+            color: #4a148c;
+        }
+
+    
+
+        tr:nth-child(even) {
+            background-color: #f3e5f5;
+        }
+
+        tr:hover {
+            background-color: #e1bee7;
+        }
+    </style>
+</head>
+<!-- Add Bootstrap 5 CDN in your layout head if not already present -->
+<header style="background: rgba(255, 255, 255, 0.85); backdrop-filter: blur(10px); box-shadow: 0 8px 24px rgba(0,0,0,0.1);">
+    <div class="container py-3">
+        <nav class="navbar navbar-expand-lg navbar-light">
+            <!-- Logo -->
+            <a class="navbar-brand d-flex align-items-center" asp-controller="User" asp-action="Home">
+                <img src="~/pillowmart-master/img/logobox.png" asp-append-version="true" alt="logo" style="height: 45px;" />
+            </a>
+
+            <!-- Toggler for mobile -->
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <!-- Nav items -->
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav align-items-center ms-auto" style="gap: 30px; font-weight: 500; font-size: 16px;">
+                    <li class="nav-item">
+                        <a class="nav-link link-animate" asp-controller="User" asp-action="Home">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link link-animate" asp-controller="User" asp-action="About">About</a>
+                    </li>
+
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle link-animate" href="#" role="button" data-bs-toggle="dropdown">Product</a>
+                        <div class="dropdown-menu dropdown-animated shadow rounded">
+                            <a class="dropdown-item" asp-controller="UserProducts" asp-action="Product_list">Product List</a>
+                        </div>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle link-animate" href="#" role="button" data-bs-toggle="dropdown">Pages</a>
+                        <div class="dropdown-menu dropdown-animated shadow rounded">
+                            @if (User.Identity.IsAuthenticated)
+                            {
+                                <span class="dropdown-item text-muted">Hi, @User.Identity.Name</span>
+                                <a class="dropdown-item" asp-controller="User" asp-action="Checkout">Checkout</a>
+                                <a class="dropdown-item" asp-controller="User" asp-action="Cart">Cart</a>
+                                <a class="dropdown-item" asp-controller="Order" asp-action="MyOrders">My Orders</a>
+                            }
+                            else
+                            {
+                                <a class="dropdown-item" asp-area="Identity" asp-page="/Account/Login">Login</a>
+                                <a class="dropdown-item" asp-area="Identity" asp-page="/Account/Register">Register</a>
+                            }
+                        </div>
+                    </li>
+
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        <li class="nav-item">
+                            <form method="post" asp-area="Identity" asp-page="/Account/Logout" class="d-inline">
+                                @Html.AntiForgeryToken()
+                                <button type="submit" class="btn btn-sm btn-outline-danger">Logout</button>
+                            </form>
+                        </li>
+                    }
+
+
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle link-animate" href="#" role="button" data-bs-toggle="dropdown">Blog</a>
+                        <div class="dropdown-menu dropdown-animated shadow rounded">
+                            <a class="dropdown-item" asp-controller="Blog" asp-action="Index">Blog</a>
+                            <a class="dropdown-item" asp-controller="Blog" asp-action="SingleBlog">Single Blog</a>
+                        </div>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link link-animate" asp-controller="Contact" asp-action="Index">Contact</a>
+                    </li>
+
+                    <!-- Icons -->
+
+                    <li class="nav-item ms-2">
+                        <a asp-controller="Cart" asp-action="Index" class="text-dark icon-animate" style="font-size: 20px;">
+                            <i class="flaticon-shopping-cart-black-shape"></i>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    </div>
+    </header>
+
+
+
+<div class="orders-container">
+    <h2>My Orders 💜</h2>
+
+    @if (!Model.Any())
+    {
+        <div class="no-orders">
+            <p>You haven't placed any orders yet.</p>
+            <p>Start shopping to fill this page with cuteness! 🛍️</p>
+        </div>
+    }
+    else
+    {
+        foreach (var order in Model)
+        {
+            <div class="order-box mb-5 p-4 rounded shadow-sm" style="background: #fff8fc;">
+                <h4 class="text-purple mb-3">Order ID: <strong>@order.OrderId</strong> - ₹@order.TotalPrice</h4>
+                <p><strong>Status:</strong> @order.OrderStatus | <strong>Payment:</strong> @order.PaymentStatus | <strong>Order Date:</strong> @order.OrderDate.ToShortDateString()</p>
+
+                <div class="table-responsive mt-3">
+                    <table class="table table-bordered rounded" style="background-color: #fef6ff;">
+                        <thead class="table-light">
+                            <tr class="text-center">
+                                <th>Product Name</th>
+                                <th>Quantity</th>
+                                <th>Price per Item</th>
+                                <th>Subtotal</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in order.OrderDetails)
+                            {
+                                <tr class="text-center">
+                                    <td>@item.Product?.ProductName</td>
+                                    <td>@item.Quantity</td>
+                                    <td>₹@item.Price</td>
+                                    <td>₹@(item.Quantity * item.Price)</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        }
+    }
+</div>
+</html>
+@* @model IEnumerable<BoxBuildproj.Models.ViewModels.OrderViewModel>
+
+@* @{
+@*     ViewData["Title"] = "My Orders";
+@*     Layout = "~/Views/Shared/_Layout.cshtml"; *@
+@* } *@
+
+@* <h2 class="mb-4">My Orders</h2> *@
+
+@* @if (!Model.Any()) *@
+@* { *@
+@*     <div class="alert alert-info">You haven't placed any orders yet.</div> *@
+@* } *@
+@* else *@
+@* { *@
+@*     var ordersGrouped = Model.GroupBy(o => o.OrderId); *@
+
+@*     foreach (var group in ordersGrouped) *@
+@*     { *@
+@*         var firstItem = group.First(); *@
+@*         <div class="card shadow-sm mb-4"> *@
+@*             <div class="card-header bg-primary text-white"> *@
+@*                 <div class="d-flex justify-content-between"> *@
+@*                     <div><strong>Order ID:</strong> @firstItem.OrderId</div> *@
+@*                     <div><strong>Status:</strong> @firstItem.OrderStatus</div> *@
+@*                 </div> *@
+@*             </div> *@
+@*             <div class="card-body"> *@
+@*                 @foreach (var item in group) *@
+@*                 { *@
+@*                     <div class="row mb-3"> *@
+@*                         <div class="col-md-2"> *@
+@*                             <img src="@item.ImageUrl" class="img-fluid rounded border" style="max-height: 100px;" /> *@
+@*                         </div> *@
+@*                         <div class="col-md-6"> *@
+@*                             <h5>@item.ProductName</h5> *@
+@*                             <p>Quantity: @item.Quantity</p> *@
+@*                             <p>Price: ₹@item.Price</p> *@
+@*                         </div> *@
+@*                         <div class="col-md-4 text-end"> *@
+@*                             <h6 class="text-success">Subtotal: ₹@(item.Quantity * item.Price)</h6> *@
+@*                         </div> *@
+@*                     </div> *@
+@*                     <hr /> *@
+@*                 } *@
+
+@*                 <div class="row"> *@
+@*                     <div class="col-md-6"> *@
+@*                         <p><strong>Shipping Address:</strong> @firstItem.ShippingAddress</p> *@
+@*                         <p><strong>Billing Address:</strong> @firstItem.BillingAddress</p> *@
+@*                     </div> *@
+@*                     <div class="col-md-6 text-end"> *@
+@*                         <h5><strong>Total:</strong> ₹@firstItem.TotalPrice</h5> *@
+@*                         <span class="badge bg-@(firstItem.PaymentStatus == "Paid" ? "success" : "warning")">@firstItem.PaymentStatus</span> *@
+@*                     </div> *@
+@*                 </div> *@
+@*             </div> *@
+@*         </div> *@
+@*     } *@
+@* } *@

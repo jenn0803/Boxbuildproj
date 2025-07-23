@@ -17,45 +17,364 @@
 @* </form> *@
 
 @model BoxBuildproj.Models.Productstbl
+@{
+    ViewData["Title"] = "Admin Dashboard";
+    var username = User.Identity.IsAuthenticated ? User.Identity.Name : "Admin";
+}
 
-<h2>Edit Product</h2>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>@ViewData["Title"]</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-<form asp-action="Edit" method="post" enctype="multipart/form-data">
-    <input type="hidden" asp-for="ProductID" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet" />
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet" />
 
-    <label>Product Name:</label>
-    <input asp-for="ProductName" class="form-control" required />
-
-    <label>Description:</label>
-    <textarea asp-for="Description" class="form-control"></textarea>
-
-    <label>Price:</label>
-    <input asp-for="Price" class="form-control" required type="number" step="0.01" />
-
-    <label>Stock Quantity:</label>
-    <input asp-for="StockQuantity" class="form-control" required type="number" />
-
-    <label>Category:</label>
-    <input asp-for="Category" class="form-control" required />
-
-    <!-- Display Existing Image -->
-    <div>
-        <label>Current Image:</label>
-        @if (!string.IsNullOrEmpty(Model.ImagePath))
-        {
-            <div>
-                <img src="@Model.ImagePath" alt="Product Image" width="150" height="150" class="mb-2" />
-            </div>
+    <style>
+        * {
+            font-family: 'Poppins', sans-serif;
         }
-        else
-        {
-            <p>No Image Available</p>
+
+        body {
+            margin: 0;
+            padding-left: 230px; /* Avoid content under sidebar */
+            padding-top:100px;
+            background: linear-gradient(145deg, #f3e7ff, #e5f0ff);
+            font-family: 'Nunito', sans-serif;
+            padding: 2rem;
         }
+
+        .header {
+            height: 70px;
+            background: linear-gradient(to right, #7f6cff, #c78bff);
+            color: white;
+            padding: 0 30px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            left: 0;
+            z-index: 1000;
+        }
+
+            .header h3 {
+                margin: 0;
+                font-weight: 600;
+            }
+
+        .profile-dropdown {
+            display: flex;
+            align-items: center;
+        }
+
+            .profile-dropdown i {
+                font-size: 1.5rem;
+                margin-right: 10px;
+            }
+
+        .sidebar {
+            position: fixed;
+            top: 70px;
+            left: 0;
+            height: 100%;
+            width: 230px;
+            background: #6c4cf1;
+            color: white;
+            padding-top: 30px;
+            z-index: 999;
+        }
+
+            .sidebar a {
+                color: white;
+                text-decoration: none;
+                display: block;
+                padding: 12px 20px;
+                font-size: 1rem;
+                transition: 0.3s;
+            }
+
+                .sidebar a:hover {
+                    background-color: #8265ff;
+                    border-left: 4px solid #fff;
+                }
+
+        .main-content {
+            padding: 110px 30px 30px 30px; /* Adjust for header + sidebar */
+        }
+
+        .card-box {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.07);
+            padding: 25px;
+            transition: 0.3s ease;
+            text-align: center;
+        }
+
+            .card-box:hover {
+                transform: translateY(-6px);
+            }
+
+            .card-box i {
+                font-size: 2.8rem;
+                color: #6c4cf1;
+            }
+
+            .card-box h5 {
+                margin-top: 15px;
+                font-weight: 600;
+            }
+
+            .card-box a {
+                margin-top: 15px;
+                display: inline-block;
+                padding: 8px 20px;
+                border-radius: 30px;
+                background-color: #6c4cf1;
+                color: white;
+                text-decoration: none;
+            }
+
+        .widget-box {
+            background-color: rgba(255, 255, 255, 0.85);
+            border-radius: 20px;
+            padding: 20px;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.05);
+        }
+
+            .widget-box h6 {
+                font-weight: 600;
+            }
+
+        .btn-logout {
+            background: white;
+            border: none;
+            color: #6c4cf1;
+            font-weight: 600;
+            width: 90%;
+            margin: 20px auto;
+            display: block;
+            border-radius: 30px;
+            padding: 10px;
+        }
+
+            .btn-logout:hover {
+                background-color: #eae2ff;
+            }
+
+        /* Responsive Fixes */
+        @@media (max-width: 768px) {
+            body {
+                padding-left: 0;
+            }
+
+            .sidebar {
+                width: 100%;
+                height: auto;
+                position: relative;
+            }
+
+            .header {
+                flex-direction: column;
+                align-items: flex-start;
+                height: auto;
+                padding: 15px;
+            }
+
+            .main-content {
+                margin-left: 0;
+                padding-top: 140px;
+            }
+
+            .pulse {
+                animation: pulse-animation 2s infinite;
+            }
+
+            @@keyframes pulse-animation {
+                0% {
+                    transform: scale(1);
+                    box-shadow: 0 0 0 0 rgba(108, 76, 241, 0.6);
+                }
+
+                70% {
+                    transform: scale(1.02);
+                    box-shadow: 0 0 0 15px rgba(108, 76, 241, 0);
+                }
+
+                100% {
+                    transform: scale(1);
+                    box-shadow: 0 0 0 0 rgba(108, 76, 241, 0);
+                }
+            }
+        }
+
+       
+
+        .edit-product-card {
+            max-width: 700px;
+            margin: 2rem auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 8px 20px rgba(150, 120, 255, 0.2);
+            padding: 2rem 2.5rem;
+            transition: 0.3s ease;
+        }
+
+
+            .edit-product-card:hover {
+                box-shadow: 0 12px 28px rgba(150, 120, 255, 0.3);
+            }
+
+        h2 {
+            color: #6a4bc9;
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 1.5rem;
+        }
+
+        label {
+            font-weight: 600;
+            color: #5a5a5a;
+            margin-top: 1rem;
+        }
+
+        input[type="file"] {
+            border: 2px dashed #cfc5ff;
+            padding: 0.7rem;
+            border-radius: 12px;
+            cursor: pointer;
+            background-color: #f8f6ff;
+        }
+
+            input[type="file"]:hover {
+                background-color: #f1eaff;
+            }
+
+        .form-control {
+            border-radius: 12px;
+            box-shadow: none;
+            border: 1px solid #d4d4d4;
+        }
+
+            .form-control:focus {
+                border-color: #ae89ff;
+                box-shadow: 0 0 5px rgba(174, 137, 255, 0.5);
+            }
+
+        .btn-primary {
+            background-color: #6a4bc9;
+            border: none;
+            padding: 0.6rem 1.5rem;
+            border-radius: 10px;
+            transition: 0.3s;
+        }
+
+            .btn-primary:hover {
+                background-color: #5c3bb5;
+            }
+
+        .image-preview {
+            border: 1px dashed #d3bfff;
+            border-radius: 12px;
+            margin-top: 10px;
+            max-width: 150px;
+            max-height: 150px;
+            object-fit: cover;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header -->
+    <div class="header">
+        <h3>Admin Dashboard</h3>
+        <div class="profile-dropdown">
+            <i class="fas fa-user-circle"></i>
+            <span>@username</span>
+        </div>
     </div>
 
-    <!-- Upload New Image -->
-    <label>Upload New Image:</label>
-    <input type="file" name="ProductImage" class="form-control" accept="image/*" />
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <a href="@Url.Action("Index", "Admin")"><i class="fas fa-home me-2"></i>Dashboard</a>
+        <a href="@Url.Action("Userdisplay", "Admin")"><i class="fas fa-users me-2"></i>Manage Users</a>
+        <a href="@Url.Action("Index", "Products", new { area = "Admin" })"><i class="fas fa-box me-2"></i>Manage Products</a>
+        <a href="@Url.Action("Index", "AdminOrder")"><i class="fas fa-shopping-cart me-2"></i>Orders</a>
+        <a href="@Url.Action("MailInbox", "Admin")"><i class="fas fa-envelope me-2"></i>Inbox</a>
+        <a href="@Url.Action("Profile", "Admin")"><i class="fas fa-user me-2"></i>Profile</a>
+        <a asp-controller="AdminOffers" asp-action="Index" class="nav-link">Manage Offers</a>
+        <a asp-controller="AdminOffers" asp-action="AssignOffer" class="nav-link">Assign Offers to Products</a>
 
-    <button type="submit" class="btn btn-primary mt-3">Update</button>
-</form>
+        <form asp-controller="Account" asp-action="Logout" method="post">
+            <button class="btn-logout"><i class="fas fa-sign-out-alt me-2"></i>Logout</button>
+        </form>
+    </div>
+    <div class="edit-product-card">
+        <h2>🛍️ Edit Product</h2>
+
+        <form asp-action="Edit" method="post" enctype="multipart/form-data">
+            <input type="hidden" asp-for="ProductID" />
+
+            <label>Product Name:</label>
+            <input asp-for="ProductName" class="form-control" required />
+
+            <label>Description:</label>
+            <textarea asp-for="Description" class="form-control" rows="3"></textarea>
+
+            <label>Price:</label>
+            <input asp-for="Price" class="form-control" required type="number" step="0.01" />
+
+            <label>Stock Quantity:</label>
+            <input asp-for="StockQuantity" class="form-control" required type="number" />
+
+            <label>Category:</label>
+            <input asp-for="Category" class="form-control" required />
+
+            <!-- Existing Image -->
+            <div class="mt-3">
+                <label>Current Image:</label><br />
+                @if (!string.IsNullOrEmpty(Model.ImagePath))
+                {
+                    <img src="@Model.ImagePath" class="image-preview" alt="Product Image" />
+                }
+                else
+                {
+                    <p class="text-muted">No Image Available</p>
+                }
+            </div>
+
+            <!-- Upload New Image -->
+            <label class="mt-3">Upload New Image:</label>
+            <input type="file" name="ProductImage" class="form-control" accept="image/*" onchange="previewImage(event)" />
+
+            <!-- Preview for New Upload -->
+            <div class="mt-3">
+                <img id="preview" class="image-preview" style="display: none;" />
+            </div>
+
+            <button type="submit" class="btn btn-primary mt-4">✨ Update Product</button>
+        </form>
+    </div>
+
+    <!-- Image Preview Script -->
+    <script>
+        function previewImage(event) {
+            const reader = new FileReader();
+            const preview = document.getElementById('preview');
+            reader.onload = function () {
+                preview.src = reader.result;
+                preview.style.display = 'block';
+            };
+            reader.readAsDataURL(event.target.files[0]);
+        }
+    </script>
+
+</body>
+</html>

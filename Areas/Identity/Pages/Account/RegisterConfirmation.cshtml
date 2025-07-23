@@ -1,23 +1,61 @@
 ﻿@page
-@model RegisterConfirmationModel
+@model BoxBuildproj.Areas.Identity.Pages.Account.RegisterConfirmationModel
 @{
-    ViewData["Title"] = "Register confirmation";
+    ViewData["Title"] = "Register Confirmation";
 }
 
-<h1>@ViewData["Title"]</h1>
-@{
-    if (@Model.DisplayConfirmAccountLink)
-    {
-<p>
-    This app does not currently have a real email sender registered, see <a href="https://aka.ms/aspaccountconf">these docs</a> for how to configure a real email sender.
-    Normally this would be emailed: <a id="confirm-link" href="@Model.EmailConfirmationUrl">Click here to confirm your account</a>
-</p>
+<style>
+    .confirmation-container {
+        max-width: 650px;
+        margin: 60px auto;
+        padding: 35px;
+        background: #f7faff;
+        border: 2px solid #d7e9f7;
+        border-radius: 18px;
+        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     }
-    else
-    {
-<p>
-        Please check your email to confirm your account.
-</p>
-    }
-}
 
+        .confirmation-container h2 {
+            color: #6a5acd; /* Lavender */
+            text-align: center;
+            margin-bottom: 25px;
+            font-weight: bold;
+        }
+
+        .confirmation-container p {
+            font-size: 16.5px;
+            color: #444;
+            line-height: 1.6;
+            margin-bottom: 16px;
+        }
+
+    .highlight {
+        color: #2e8b57; /* Soft green */
+        font-weight: 600;
+    }
+
+    .emoji {
+        margin-right: 6px;
+    }
+</style>
+
+<div class="confirmation-container">
+    <h2>✅ Registration Successful!</h2>
+
+    <p>
+        <span class="emoji">📧</span>
+        A confirmation link has been sent to your email:
+        <span class="highlight">@Model.Email</span>.
+    </p>
+
+    <p>
+        <span class="emoji">🔒</span>
+        Please check your inbox and click the link to verify your account before logging in.
+    </p>
+
+    <p>
+        <span class="emoji">❓</span>
+        Didn’t get the email? Check your spam folder or try registering again.
+    </p>
+</div>

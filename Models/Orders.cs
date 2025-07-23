@@ -32,8 +32,21 @@ namespace BoxBuildproj.Models
         [Column("order_status")]
         public string OrderStatus { get; set; }
 
+        public DateTime CreatedAt { get; set; } = DateTime.Now;
+
+        [Column("phone_number")]
+        public string PhoneNumber { get; set; }
+
+
         [ForeignKey("UserId")]
         public virtual BoxBuildprojUser User { get; set; }
+
+        public ICollection<OrderDetails> OrderDetails { get; set; } = new List<OrderDetails>();
+
+        [Column("order_date")]
+        public DateTime OrderDate { get; set; } = DateTime.Now; // default to now
+
+
     }
 }
 

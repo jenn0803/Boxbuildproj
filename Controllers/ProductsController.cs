@@ -19,10 +19,21 @@ namespace BoxBuildproj.Controllers
         }
 
         // GET: Products
+        //public async Task<IActionResult> Index()
+        //{
+        //    return View(await _context.Productstbl.ToListAsync());
+        //}
+
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Productstbl.ToListAsync());
+            var products = await _context.Productstbl
+                .Include(p => p.ProductOffer)
+                    .ThenInclude(po => po.Offer)
+                .ToListAsync();
+
+            return View(products);
         }
+
 
         // GET: Products/Create
         public IActionResult Create()
@@ -75,7 +86,8 @@ namespace BoxBuildproj.Controllers
                 await _context.SaveChangesAsync();
                 Console.WriteLine("Product saved with ImagePath: " + product.ImagePath);
 
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("AddDetails", "ProductDetails", new { productId = product.ProductID });
+
             }
 
             Console.WriteLine("Model state is invalid.");

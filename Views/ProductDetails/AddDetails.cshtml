@@ -1,0 +1,61 @@
+﻿@model BoxBuildproj.Models.ProductDetails
+
+@{
+    ViewData["Title"] = "Add Product Details";
+}
+
+<h2>Add Product Details</h2>
+
+<form asp-action="AddDetails" method="post">
+    <input type="hidden" asp-for="ProductID" />
+
+    <div class="form-group">
+        <label asp-for="Length" class="control-label"></label>
+        <input asp-for="Length" class="form-control" />
+        <span asp-validation-for="Length" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Width" class="control-label"></label>
+        <input asp-for="Width" class="form-control" />
+        <span asp-validation-for="Width" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Height" class="control-label"></label>
+        <input asp-for="Height" class="form-control" />
+        <span asp-validation-for="Height" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Material" class="control-label"></label>
+        <input asp-for="Material" class="form-control" />
+        <span asp-validation-for="Material" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Color" class="control-label"></label>
+        <input asp-for="Color" class="form-control" />
+        <span asp-validation-for="Color" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Thickness" class="control-label"></label>
+        <input asp-for="Thickness" class="form-control" />
+        <span asp-validation-for="Thickness" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="WeightCapacity" class="control-label"></label>
+        <input asp-for="WeightCapacity" class="form-control" />
+        <span asp-validation-for="WeightCapacity" class="text-danger"></span>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Save Details</button>
+</form>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

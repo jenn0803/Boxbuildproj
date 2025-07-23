@@ -3,6 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace BoxBuildproj.Models
 {
+
     public class Productstbl
     {
         [Key]
@@ -27,5 +28,30 @@ namespace BoxBuildproj.Models
 
         public string? ImagePath { get; set; }  // New property
         public DateTime CreatedAt { get; set; } = DateTime.Now;
+
+        [NotMapped]
+        public decimal DiscountedPrice
+        {
+            get
+            {
+                var activeOffer = ProductOffer?
+                    .FirstOrDefault(po => po.Offer != null &&
+                                          po.Offer.StartDate <= DateTime.Now &&
+                                          po.Offer.EndDate >= DateTime.Now);
+
+                if (activeOffer != null)
+                {
+                    var discount = Price * activeOffer.Offer.DiscountPercentage / 100;
+                    return Price - discount;
+                }
+
+                return Price;
+            }
+        }
+
+
+        public ICollection<ProductOffer> ProductOffer { get; set; } = new List<ProductOffer>();
+        public ICollection<Offer> Offer { get; set; } = new List<Offer>();
+        public ICollection<ProductDetails> ProductDetails { get; set; } = new List<ProductDetails>();
     }
-}
+    }

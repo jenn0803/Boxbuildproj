@@ -101,7 +101,7 @@ namespace BoxBuildproj.Migrations
 
                     b.HasKey("CategoryId");
 
-                    b.ToTable("Categ");
+                    b.ToTable("Categ", (string)null);
                 });
 
             modelBuilder.Entity("BoxBuildproj.Models.Category", b =>
@@ -118,7 +118,7 @@ namespace BoxBuildproj.Migrations
 
                     b.HasKey("CategoryId");
 
-                    b.ToTable("Categories");
+                    b.ToTable("Categories", (string)null);
                 });
 
             modelBuilder.Entity("BoxBuildproj.Models.Categoryy", b =>
@@ -135,39 +135,43 @@ namespace BoxBuildproj.Migrations
 
                     b.HasKey("CategoryId");
 
-                    b.ToTable("Categoryy");
+                    b.ToTable("Categoryy", (string)null);
                 });
 
-            modelBuilder.Entity("BoxBuildproj.Models.Producttbl", b =>
+            modelBuilder.Entity("BoxBuildproj.Models.Prodd", b =>
                 {
-                    b.Property<int>("ProductId")
+                    b.Property<int>("ProddId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasColumnName("ProddId");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ProductId"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ProddId"));
 
-                    b.Property<string>("Category")
+                    b.Property<string>("CategoryText")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Description")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
 
                     b.Property<string>("ImagePath")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
 
                     b.Property<decimal>("Price")
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<string>("ProductName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.HasKey("ProddId");
 
-                    b.HasKey("ProductId");
-
-                    b.ToTable("Producttbl");
+                    b.ToTable("Prodd", (string)null);
                 });
 
             modelBuilder.Entity("BoxBuildproj.Models.Student", b =>
@@ -191,7 +195,7 @@ namespace BoxBuildproj.Migrations
 
                     b.HasKey("StudentId");
 
-                    b.ToTable("Students");
+                    b.ToTable("Students", (string)null);
                 });
 
             modelBuilder.Entity("BoxBuildproj.Models.catgy", b =>
@@ -208,7 +212,7 @@ namespace BoxBuildproj.Migrations
 
                     b.HasKey("CategoryId");
 
-                    b.ToTable("Catgy");
+                    b.ToTable("Catgy", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>

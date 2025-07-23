@@ -9,5 +9,6 @@ namespace BoxBuildproj.Areas.Identity.Data;
 // Add profile data for application users by adding properties to the BoxBuildprojUser class
 public class BoxBuildprojUser : IdentityUser
 {
+    public DateTime CreatedAt { get; set; } = DateTime.Now;
 }
 

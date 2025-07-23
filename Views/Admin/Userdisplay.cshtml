@@ -1,77 +1,554 @@
-﻿@model IEnumerable<BoxBuildproj.Areas.Identity.Data.BoxBuildprojUser>
+﻿@* @model IEnumerable<BoxBuildproj.Areas.Identity.Data.BoxBuildprojUser> *@
 
+@* @{ *@
+@*     ViewData["Title"] = "User Display"; *@
+@*     var username = User.Identity.IsAuthenticated ? User.Identity.Name : "Admin"; *@
+@* } *@
+
+@* <!DOCTYPE html> *@
+@* <html lang="en"> *@
+@* <head> *@
+@*     <meta charset="UTF-8" /> *@
+@*     <title>@ViewData["Title"]</title> *@
+@*     <meta name="viewport" content="width=device-width, initial-scale=1.0" /> *@
+
+@*     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" /> *@
+@*     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet" /> *@
+@*     <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script> *@
+@*     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet" /> *@
+
+
+@*         <style> *@
+@*             * { *@
+@*                 font-family: 'Poppins', sans-serif; *@
+@*             } *@
+
+@*             body { *@
+@*                 margin: 0; *@
+@*                 padding-left: 230px; /* Avoid content under sidebar */ *@
+@*                 background: linear-gradient(135deg, #f8f9ff, #eae6ff); *@
+@*             } *@
+
+@*             .header { *@
+@*                 height: 70px; *@
+@*                 background: linear-gradient(to right, #7f6cff, #c78bff); *@
+@*                 color: white; *@
+@*                 padding: 0 30px; *@
+@*                 display: flex; *@
+@*                 align-items: center; *@
+@*                 justify-content: space-between; *@
+@*                 box-shadow: 0 4px 10px rgba(0,0,0,0.1); *@
+@*                 position: fixed; *@
+@*                 width: 100%; *@
+@*                 top: 0; *@
+@*                 left: 0; *@
+@*                 z-index: 1000; *@
+@*             } *@
+
+@*                 .header h3 { *@
+@*                     margin: 0; *@
+@*                     font-weight: 600; *@
+@*                 } *@
+
+@*             .profile-dropdown { *@
+@*                 display: flex; *@
+@*                 align-items: center; *@
+@*             } *@
+
+@*                 .profile-dropdown i { *@
+@*                     font-size: 1.5rem; *@
+@*                     margin-right: 10px; *@
+@*                 } *@
+
+@*             .sidebar { *@
+@*                 position: fixed; *@
+@*                 top: 70px; *@
+@*                 left: 0; *@
+@*                 height: 100%; *@
+@*                 width: 230px; *@
+@*                 background: #6c4cf1; *@
+@*                 color: white; *@
+@*                 padding-top: 30px; *@
+@*                 z-index: 999; *@
+@*             } *@
+
+@*                 .sidebar a { *@
+@*                     color: white; *@
+@*                     text-decoration: none; *@
+@*                     display: block; *@
+@*                     padding: 12px 20px; *@
+@*                     font-size: 1rem; *@
+@*                     transition: 0.3s; *@
+@*                 } *@
+
+@*                     .sidebar a:hover { *@
+@*                         background-color: #8265ff; *@
+@*                         border-left: 4px solid #fff; *@
+@*                     } *@
+
+@*             .main-content { *@
+@*                 padding: 110px 30px 30px 30px; /* Adjust for header + sidebar */ *@
+@*             } *@
+
+@*             .card-box { *@
+@*                 background: white; *@
+@*                 border-radius: 20px; *@
+@*                 box-shadow: 0 10px 25px rgba(0, 0, 0, 0.07); *@
+@*                 padding: 25px; *@
+@*                 transition: 0.3s ease; *@
+@*                 text-align: center; *@
+@*             } *@
+
+@*                 .card-box:hover { *@
+@*                     transform: translateY(-6px); *@
+@*                 } *@
+
+@*                 .card-box i { *@
+@*                     font-size: 2.8rem; *@
+@*                     color: #6c4cf1; *@
+@*                 } *@
+
+@*                 .card-box h5 { *@
+@*                     margin-top: 15px; *@
+@*                     font-weight: 600; *@
+@*                 } *@
+
+@*                 .card-box a { *@
+@*                     margin-top: 15px; *@
+@*                     display: inline-block; *@
+@*                     padding: 8px 20px; *@
+@*                     border-radius: 30px; *@
+@*                     background-color: #6c4cf1; *@
+@*                     color: white; *@
+@*                     text-decoration: none; *@
+@*                 } *@
+
+@*             .widget-box { *@
+@*                 background-color: rgba(255, 255, 255, 0.85); *@
+@*                 border-radius: 20px; *@
+@*                 padding: 20px; *@
+@*                 box-shadow: 0 6px 15px rgba(0, 0, 0, 0.05); *@
+@*             } *@
+
+@*                 .widget-box h6 { *@
+@*                     font-weight: 600; *@
+@*                 } *@
+
+@*             .btn-logout { *@
+@*                 background: white; *@
+@*                 border: none; *@
+@*                 color: #6c4cf1; *@
+@*                 font-weight: 600; *@
+@*                 width: 90%; *@
+@*                 margin: 20px auto; *@
+@*                 display: block; *@
+@*                 border-radius: 30px; *@
+@*                 padding: 10px; *@
+@*             } *@
+
+@*                 .btn-logout:hover { *@
+@*                     background-color: #eae2ff; *@
+@*                 } *@
+
+@*             /* Responsive Fixes */ *@
+@*             @@media (max-width: 768px) { *@
+@*                 body { *@
+@*                     padding-left: 0; *@
+@*                 } *@
+
+@*                 .sidebar { *@
+@*                     width: 100%; *@
+@*                     height: auto; *@
+@*                     position: relative; *@
+@*                 } *@
+
+@*                 .header { *@
+@*                     flex-direction: column; *@
+@*                     align-items: flex-start; *@
+@*                     height: auto; *@
+@*                     padding: 15px; *@
+@*                 } *@
+
+@*                 .main-content { *@
+@*                     margin-left: 0; *@
+@*                     padding-top: 140px; *@
+@*                 } *@
+
+@*             .table-hover tbody tr:hover { *@
+@*                 background-color: #f1efff; *@
+@*                 cursor: pointer; *@
+@*             } *@
+@*             } *@
+
+       
+
+@*         </style> *@
+@*     </head> *@
+@*     <body> *@
+
+@*         <!-- Header --> *@
+@*         <div class="header"> *@
+@*             <h3>Admin Dashboard</h3> *@
+@*             <div class="profile-dropdown"> *@
+@*                 <i class="fas fa-user-circle"></i> *@
+@*                 <span>@username</span> *@
+@*             </div> *@
+@*         </div> *@
+
+@*         <!-- Sidebar --> *@
+@*         <div class="sidebar"> *@
+@*             <a href="@Url.Action("Index", "Admin")"><i class="fas fa-home me-2"></i>Dashboard</a> *@
+@*             <a href="@Url.Action("Userdisplay", "Admin")"><i class="fas fa-users me-2"></i>Manage Users</a> *@
+@*             <a href="@Url.Action("Index", "Products", new { area = "Admin" })"><i class="fas fa-box me-2"></i>Manage Products</a> *@
+@*             <a href="@Url.Action("Index", "AdminOrder")"><i class="fas fa-shopping-cart me-2"></i>Orders</a> *@
+@*             <a href="@Url.Action("MailInbox", "Admin")"><i class="fas fa-envelope me-2"></i>Inbox</a> *@
+@*             <a href="@Url.Action("Profile", "Admin")"><i class="fas fa-user me-2"></i>Profile</a> *@
+@*             <form asp-controller="Manage" asp-action="Logout" method="post"> *@
+@*                 <button class="btn-logout"><i class="fas fa-sign-out-alt me-2"></i>Logout</button> *@
+@*             </form> *@
+@*         </div> *@
+
+
+@*     <!-- Main Content --> *@
+@*     <div class="container mt-5 main-content"> *@
+
+@*         <!-- User Count Display --> *@
+@*         <div class="d-flex justify-content-between align-items-center mb-4 glass-card"> *@
+@*             <h2 class="text-primary">User Management</h2> *@
+@*             <div class="total-user-badge shadow-sm"> *@
+@*                 <i class="fas fa-users"></i> Total Users: <strong>@ViewBag.TotalUsers</strong> *@
+@*             </div> *@
+@*         </div> *@
+
+@*         <!-- Users Table --> *@
+@*         <!-- Stylish Users Table --> *@
+@*         <div class="table-responsive modern-table"> *@
+@*             <table class="table table-hover align-middle" style="background: linear-gradient(to right, #ffffff, #f8f9ff); border-radius: 12px; overflow: hidden; box-shadow: 0 4px 20px rgba(0,0,0,0.05);"> *@
+@*                 <thead class="text-white" style="background: linear-gradient(to right, #6c4cf1, #a18dff);"> *@
+@*                     <tr> *@
+@*                         <th style="padding: 15px;">#</th> *@
+@*                         <th>Email</th> *@
+@*                         <th>Username</th> *@
+@*                         <th>Actions</th> *@
+@*                     </tr> *@
+@*                 </thead> *@
+@*                 <tbody> *@
+@*                     @if (Model.Any()) *@
+@*                     { *@
+@*                         int count = 1; *@
+@*                         foreach (var user in Model) *@
+@*                         { *@
+@*                             <tr style="transition: all 0.2s ease;"> *@
+@*                                 <td>@count</td> *@
+@*                                 <td>@user.Email</td> *@
+@*                                 <td>@user.UserName</td> *@
+@*                                 <td> *@
+@*                                     <a href="#" class="btn btn-sm" style="background-color: #ff4d4d; color: white; border-radius: 20px;"> *@
+@*                                         <i class="fas fa-trash-alt me-1"></i> Delete *@
+@*                                     </a> *@
+@*                                 </td> *@
+@*                             </tr> *@
+@*                             count++; *@
+@*                         } *@
+@*                     } *@
+@*                     else *@
+@*                     { *@
+@*                         <tr> *@
+@*                             <td colspan="4" class="text-center text-muted p-4">No users found.</td> *@
+@*                         </tr> *@
+@*                     } *@
+@*                 </tbody> *@
+@*             </table> *@
+@*         </div> *@
+
+@*     <!-- FontAwesome --> *@
+@*     <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script> *@
+@* </body> *@
+@* </html> *@
+
+@model IEnumerable<BoxBuildproj.Areas.Identity.Data.BoxBuildprojUser>
 
 @{
-    ViewData["Title"] = "Manage Users";
+    ViewData["Title"] = "User Display";
+    var username = User.Identity.IsAuthenticated ? User.Identity.Name : "Admin";
 }
 
-<div class="container mt-5">
-    <!-- User Count Display -->
-    <div class="d-flex justify-content-between align-items-center mb-4">
-        <h2 class="text-primary">User Management</h2>
-        <div class="btn btn-info shadow">
-            <i class="fas fa-users"></i> Total Users: <strong>@ViewBag.TotalUsers</strong>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>@ViewData["Title"]</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet" />
+
+    <style>
+        * {
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            margin: 0;
+            padding-left: 230px;
+            background: linear-gradient(135deg, #f8f9ff, #eae6ff);
+        }
+
+        .header {
+            height: 70px;
+            background: linear-gradient(to right, #7f6cff, #c78bff);
+            color: white;
+            padding: 0 30px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            left: 0;
+            z-index: 1000;
+        }
+
+            .header h3 {
+                margin: 0;
+                font-weight: 600;
+            }
+
+        .profile-dropdown {
+            display: flex;
+            align-items: center;
+        }
+
+            .profile-dropdown i {
+                font-size: 1.5rem;
+                margin-right: 10px;
+            }
+
+        .sidebar {
+            position: fixed;
+            top: 70px;
+            left: 0;
+            height: 100%;
+            width: 230px;
+            background: #6c4cf1;
+            color: white;
+            padding-top: 30px;
+            z-index: 999;
+        }
+
+            .sidebar a {
+                color: white;
+                text-decoration: none;
+                display: block;
+                padding: 12px 20px;
+                font-size: 1rem;
+                transition: 0.3s;
+            }
+
+                .sidebar a:hover {
+                    background-color: #8265ff;
+                    border-left: 4px solid #fff;
+                }
+
+        .main-content {
+            padding: 110px 30px 30px 30px;
+        }
+
+        .total-user-badge {
+            background: #fff;
+            padding: 10px 20px;
+            border-radius: 30px;
+            font-weight: 600;
+            color: #6c4cf1;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        /* New Stylish Table */
+        .modern-table table {
+            border-collapse: separate;
+            border-spacing: 0 12px;
+            width: 100%;
+        }
+
+        .modern-table thead tr {
+            background: linear-gradient(to right, #6c4cf1, #a18dff);
+            color: white;
+        }
+
+        .modern-table thead th {
+            border: none;
+            padding: 15px;
+            text-align: left;
+        }
+
+        .modern-table tbody tr {
+            background-color: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.05);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+            .modern-table tbody tr:hover {
+                transform: scale(1.01);
+                box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+            }
+
+        .modern-table td {
+            padding: 15px;
+            border: none;
+        }
+
+        .modern-table .btn {
+            border-radius: 30px;
+            font-size: 0.85rem;
+            padding: 6px 14px;
+        }
+
+        .modern-table .badge-user {
+            background-color: #f1efff;
+            color: #6c4cf1;
+            padding: 5px 10px;
+            border-radius: 12px;
+            font-weight: 500;
+        }
+
+        .btn-delete {
+            background-color: #ff4d4d;
+            color: white;
+        }
+
+            .btn-delete:hover {
+                background-color: #e43f3f;
+            }
+
+        .btn-logout {
+            background: white;
+            border: none;
+            color: #6c4cf1;
+            font-weight: 600;
+            width: 90%;
+            margin: 20px auto;
+            display: block;
+            border-radius: 30px;
+            padding: 10px;
+        }
+
+            .btn-logout:hover {
+                background-color: #eae2ff;
+            }
+
+        @@media (max-width: 768px) {
+            body
+
+        {
+            padding-left: 0;
+        }
+
+        .sidebar {
+            width: 100%;
+            height: auto;
+            position: relative;
+        }
+
+        .header {
+            flex-direction: column;
+            align-items: flex-start;
+            height: auto;
+            padding: 15px;
+        }
+
+        .main-content {
+            margin-left: 0;
+            padding-top: 140px;
+        }
+
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header -->
+    <div class="header">
+        <h3>Admin Dashboard</h3>
+        <div class="profile-dropdown">
+            <i class="fas fa-user-circle"></i>
+            <span>@username</span>
         </div>
     </div>
 
-    <!-- Users Table -->
-    <div class="table-responsive">
-        <table class="table table-bordered table-striped">
-            <thead class="thead-dark">
-                <tr>
-                    <th>#</th>
-                    <th>Email</th>
-                    <th>Username</th>
-                    <th>Actions</th>
-                </tr>
-            </thead>
-            <tbody>
-                @if (Model.Any())
-                {
-                    int count = 1;
-                    @foreach (var user in Model)
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <a href="@Url.Action("Index", "Admin")"><i class="fas fa-home me-2"></i>Dashboard</a>
+        <a href="@Url.Action("Userdisplay", "Admin")"><i class="fas fa-users me-2"></i>Manage Users</a>
+        <a href="@Url.Action("Index", "Products", new { area = "Admin" })"><i class="fas fa-box me-2"></i>Manage Products</a>
+        <a href="@Url.Action("Index", "AdminOrder")"><i class="fas fa-shopping-cart me-2"></i>Orders</a>
+        <a href="@Url.Action("MailInbox", "Admin")"><i class="fas fa-envelope me-2"></i>Inbox</a>
+        <a href="@Url.Action("Profile", "Admin")"><i class="fas fa-user me-2"></i>Profile</a>
+        <a asp-controller="AdminOffers" asp-action="Index" class="nav-link">Manage Offers</a>
+        <a asp-controller="AdminOffers" asp-action="AssignOffer" class="nav-link">Assign Offers to Products</a>
+
+        <form asp-controller="Manage" asp-action="Logout" method="post">
+            <button class="btn-logout"><i class="fas fa-sign-out-alt me-2"></i>Logout</button>
+        </form>
+    </div>
+
+    <!-- Main Content -->
+    <div class="container mt-5 main-content">
+
+        <!-- User Count Display -->
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h2 class="text-primary">User Management</h2>
+            <div class="total-user-badge shadow-sm">
+                <i class="fas fa-users"></i> Total Users: <strong>@ViewBag.TotalUsers</strong>
+            </div>
+        </div>
+
+        <!-- Users Table -->
+        <div class="table-responsive modern-table">
+            <table class="table align-middle">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Email</th>
+                        <th>Username</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (Model.Any())
+                    {
+                        int count = 1;
+                        foreach (var user in Model)
+                        {
+                            <tr>
+                                <td>@count</td>
+                                <td>@user.Email</td>
+                                <td><span class="badge-user">@user.UserName</span></td>
+                                <td>
+                                    <a href="#" class="btn btn-delete btn-sm" title="Delete user">
+                                        <i class="fas fa-trash-alt me-1"></i> Delete
+                                    </a>
+                                </td>
+                            </tr>
+                            count++;
+                        }
+                    }
+                    else
                     {
                         <tr>
-                            <td>@count</td>
-                            <td>@user.Email</td>
-                            <td>@user.UserName</td>
-                            <td>
-                                <a href="#" class="btn btn-danger btn-sm">
-                                    <i class="fas fa-trash-alt"></i> Delete
-                                </a>
-                            </td>
+                            <td colspan="4" class="text-center text-muted p-4">No users found.</td>
                         </tr>
-                        count++;
                     }
-                }
-                else
-                {
-                    <tr>
-                        <td colspan="4" class="text-center text-muted">No users found.</td>
-                    </tr>
-                }
-            </tbody>
-        </table>
+                </tbody>
+            </table>
+        </div>
     </div>
-</div>
 
-<style>
-    .btn-info {
-        font-size: 18px;
-        padding: 10px 20px;
-        display: flex;
-        align-items: center;
-    }
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
 
-        .btn-info i {
-            margin-right: 10px;
-        }
-
-    .table th {
-        background-color: #007bff;
-        color: white;
-    }
-</style>
-
-<!-- FontAwesome for icons -->
-<script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>

@@ -40,6 +40,17 @@ public class BoxBuildprojContext : IdentityDbContext<BoxBuildprojUser>
     public DbSet<Orders> Orders { get; set; }
     public DbSet<Payments> Payments { get; set; }
 
+    public DbSet<OrderDetails> OrderDetails { get; set; }
+
+    public DbSet<Contact> Contacts { get; set; }
+
+    public DbSet<Offer> Offer { get; set; }
+    public DbSet<ProductOffer> ProductOffer { get; set; }
+
+    public DbSet<RecentlyViewed> RecentlyViewed { get; set; }
+    public DbSet<ProductDetails> ProductDetails { get; set; }
+
+
     //public DbSet<Product> Products { get; set; }
 
     //public DbSet<Prodd> Prodd { get; set; }  // New Prodd tabl
@@ -113,5 +124,11 @@ public class BoxBuildprojContext : IdentityDbContext<BoxBuildprojUser>
         base.OnModelCreating(builder);  // Ensure this is called to configure Identity correctly
 
         // Any additional custom configurations for other entities can go here
+     builder.Entity<ProductDetails>()
+    .HasOne(p => p.Product)
+    .WithMany()
+    .HasForeignKey(p => p.ProductID)
+    .OnDelete(DeleteBehavior.Cascade);
+
     }
 }

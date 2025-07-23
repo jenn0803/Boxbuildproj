@@ -237,7 +237,7 @@ namespace BoxBuildproj.Areas.Identity.Pages.Account
                     if (roles.Contains("Admin"))
                     {
                         _logger.LogInformation("Redirecting to Admin page.");
-                        return LocalRedirect("/Admin/Home"); // Ensure this page exists
+                        return LocalRedirect("/Admin/Index"); // Ensure this page exists
                     }
                     else if (roles.Contains("User"))
                     {

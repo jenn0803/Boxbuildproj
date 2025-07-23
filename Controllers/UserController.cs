@@ -48,9 +48,43 @@ namespace BoxBuildproj.Controllers
 
         public async Task<IActionResult> Home()
         {
-            var products = await _context.Productstbl.ToListAsync();
-            return View("Home", products);
+            // Step 1: Fetch OrderDetails + Product in memory
+            var orderDetails = await _context.OrderDetails
+                .Include(od => od.Product)
+                .ToListAsync();
+
+            // Step 2: Group & transform in memory
+            var trending = orderDetails
+                .Where(od => od.Product != null) // null check
+                .GroupBy(od => od.ProductId)
+                .Select(g =>
+                {
+                    var product = g.First().Product;
+
+                    return new TrendingProductViewModel
+                    {
+                        ProductId = g.Key,
+                        ProductName = product.ProductName,
+                        Price = product.Price,
+                        ImagePath = product.ImagePath ?? "default.jpg",
+                        TotalSold = g.Sum(x => x.Quantity)
+                    };
+                })
+                .OrderByDescending(p => p.TotalSold)
+                .Take(6)
+                .ToList();
+
+            var allProducts = await _context.Productstbl.ToListAsync();
+
+            var viewModel = new HomeViewModel
+            {
+                AllProducts = allProducts,
+                TrendingProducts = trending
+            };
+
+            return View("Home", viewModel);
         }
+
         public IActionResult About()
         {
             return View("About"); // This will look for Views/User/About.cshtml
@@ -108,6 +142,6 @@ namespace BoxBuildproj.Controllers
             return View("Product_list", products);
         }
 
-
+      
     }
 }

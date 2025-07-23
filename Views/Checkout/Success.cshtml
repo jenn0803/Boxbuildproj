@@ -1,11 +1,66 @@
 ﻿@{
-    ViewData["Title"] = "Payment Successful";
+    ViewBag.Title = "Payment Successful";
+    //Layout = "~/Views/Shared/_Layout.cshtml"; // optional
 }
 
-<div class="text-center mt-5">
-    <h2 class="text-success">Payment Successful!</h2>
-    <p>Thank you for your purchase.</p>
-    <p>Your payment ID: <strong>@ViewBag.PaymentId</strong></p>
-    <a href="/" class="btn btn-primary">Continue Shopping</a>
+<style>
+    .success-container {
+        max-width: 600px;
+        margin: 100px auto;
+        background: #fef9f9;
+        border: 2px solid #ffdee9;
+        border-radius: 20px;
+        padding: 40px;
+        text-align: center;
+        box-shadow: 0 10px 30px rgba(255, 182, 193, 0.3);
+        font-family: 'Segoe UI', sans-serif;
+    }
+
+        .success-container h2 {
+            color: #ff69b4;
+            font-size: 32px;
+            margin-bottom: 20px;
+        }
+
+    .success-icon {
+        font-size: 50px;
+        color: #ff69b4;
+        margin-bottom: 15px;
+    }
+
+    .success-container p {
+        font-size: 18px;
+        color: #555;
+        margin: 8px 0;
+    }
+
+    .heart {
+        color: #ff69b4;
+    }
+
+    .back-btn {
+        display: inline-block;
+        margin-top: 30px;
+        padding: 10px 25px;
+        background-color: #ffb6c1;
+        color: white;
+        text-decoration: none;
+        font-weight: bold;
+        border-radius: 10px;
+        transition: background 0.3s ease;
+    }
+
+        .back-btn:hover {
+            background-color: #ff69b4;
+        }
+</style>
+
+<div class="success-container">
+    <div class="success-icon">🎉</div>
+    <h2>Payment Successful!</h2>
+    <p>Thank you for shopping with <strong>BoxBuild</strong> 💖</p>
+    <p>Your receipt has been sent to your email.</p>
+    <p>We hope you love your order! <span class="heart">💕</span></p>
+
+    <a href="~/User/Home" class="back-btn">Back to Home</a>
 </div>
-v
